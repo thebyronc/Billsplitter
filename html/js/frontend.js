@@ -18,23 +18,69 @@ $(document).ready(function() {
     })
 
 
-      $(wrapper).on("click", '.submit', function() {
-      var name = $("input#name").val();
-      var email = $("input#email").val();
-//        var person = {
+
+    $("#addUser").submit(function(event) {
+    event.preventDefault();
+    var name = $("#name").val();
+    alert(name);
+    var email = $("#email").val();
+    alert(email);
+    var person = {
+    "name" : name,
+    "person" : person
+    };
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:4567/users/new",
+        data: JSON.stringify(person),
+        dataType: "json",
+        success: function(data){alert("person added");},
+        failure: function(errMsg){
+            alert(errMsg);
+        }
+     });
+    });
+  });
+
+
+
+
+//      $(wrapper).on("click", '.submit', function(event) {
+//      event.preventDefault();
+//      var name = $("input#name").val();
+//      var email = $("input#email").val();
+//       var person = {
 //          "name": name,
 //          "email": email
 //        };
-        $.ajax({
-          type: "POST",
-          url: "http://localhost:4567/users/new",
-          data: JSON.stringify(name, email),
-          dataType: "json",
-          success: function(data){alert(data);},
-          failure: function(errMsg) {
-              alert(errMsg);
-          }
-        });
-      });
-});
+//        $.ajax({
+//          type: "POST",
+//          url: "http://localhost:4567/users/new",
+//          data: JSON.stringify(person),
+//          dataType: "json",
+//          success: function(data){alert(data);},
+//          failure: function(errMsg) {
+//              alert(errMsg);
+//          }
+//        });
+//      });
+//
+//      $("form.input_fields_wraps").submit(function(event){
+//              event.preventDefault()
+//              var name = $("input#name").val();
+//              var name = $("input#email").val();
+//              var person = { "name": name , "email": email };
+//              debugger;
+//              $.ajax({
+//                  type: "POST",
+//                  url: "http://localhost:4567/users/new",
+//                  data: JSON.stringify(person),
+//                  dataType: "json",
+//                  success: function(data){alert("user added!");},
+//                  failure: function(errMsg) {
+//                      alert(errMsg);
+//                      }
+//                  });
+//              });
+//});
 
