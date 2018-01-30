@@ -73,6 +73,18 @@ public class Sql2oUserDaoTest {
         assertEquals(0, userDao.getAll().size());
     }
 
+    @Test
+    public void clearAllClears() throws Exception {
+        User user = setupNewUser();
+        User user1 = setupNewUser();
+        User user2 = setupNewUser();
+        userDao.add(user);
+        userDao.add(user1);
+        userDao.add(user2);
+        userDao.clearAll();
+        assertEquals(0,userDao.getAll().size());
+    }
+
     public User setupNewUser() {
         return new User("Byron", "byron@email.com");
     }
