@@ -85,15 +85,15 @@ public class App extends RuntimeException {
             return gson.toJson(editUser);
         });
 
-        post("/receipts/:id/items/:itemId/update", (req, res) -> { //process a form to update item
-            Item editItem = gson.fromJson(req.body(), Item.class);
-            int idOfItemToEdit = Integer.parseInt(req.params("id"));
-            String itemName = editItem.getItemName();
-            double cost = editItem.getCost();
-            int userId = editItem.getUserId();
-            itemDao.update(idOfItemToEdit, itemName, cost, userId);
-            return gson.toJson(editItem);
-        });
+//        post("/receipts/:id/items/:itemId/update", (req, res) -> { //process a form to update item
+//            Item editItem = gson.fromJson(req.body(), Item.class);
+//            int idOfItemToEdit = Integer.parseInt(req.params("id"));
+//            String itemName = editItem.getItemName();
+//            double cost = editItem.getCost();
+//            int userId = editItem.getUserId();
+//            itemDao.update(idOfItemToEdit, itemName, cost, userId);
+//            return gson.toJson(editItem);
+//        });
 
         //EXCEPTIONS
         exception(ApiException.class, (exc, req, res) -> {

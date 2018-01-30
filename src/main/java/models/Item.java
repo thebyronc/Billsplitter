@@ -5,11 +5,14 @@ public class Item {
     private double cost;
     private int receiptId;
     private int id;
+    private int split;
 
-    public Item(String itemName, double cost, int receiptId) {
+    public Item(String itemName, double cost, int split, int receiptId) {
         this.itemName = itemName;
         this.cost = cost;
+        this.split = split;
         this.receiptId = receiptId;
+
     }
 
     public void setItemName(String itemName) {
@@ -38,5 +41,9 @@ public class Item {
     }
     public int getId() {
         return this.id;
+    }
+
+    public double getSplit() {
+       return this.split;
     }
 }

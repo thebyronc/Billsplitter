@@ -14,4 +14,6 @@ public interface ItemDao {
     void update(int id, String itemName, double cost, int userId);
 
     void deleteById(int id);
+
+    void splitItemById(int id, double cost, double getSplit);
 }
