@@ -12,4 +12,5 @@ public interface ReceiptDao {
     void update(int id, String receiptName, double total, Boolean cleared);
 
     void deleteById(int id);
+    void clearAll();
 }
