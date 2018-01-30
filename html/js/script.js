@@ -15,7 +15,7 @@ $(document).ready(function() {
         $('.id').text(`Receipt Id: ${response.id}`);
       },
       error: function() {
-        $('#errors').text("There was an error processing your request. Please try again.");
+        $('#errors').text("There was an error processing your request. Please try again.")
       }
     });
   });
@@ -33,7 +33,7 @@ $(document).ready(function() {
         }
       },
       error: function() {
-        $('#errors').text("There was an error processing your request. Please try again.");
+        $('#errors').text("There was an error processing your request. Please try again.")
       }
     });
   });
@@ -47,11 +47,9 @@ $(document).ready(function() {
       url: "http://localhost:4567/receipts/new",
       data: JSON.stringify(receipt),
       dataType: "json",
-      success: function(data){
-        $('#errors').text("There was an error processing your request. Please try again." + data);
-      },
-      failure: function() {
-            $('#errors').text("There was an error processing your request. Please try again." + data);
+      success: function(data){alert(data);},
+      failure: function(errMsg) {
+          alert(errMsg);
       }
     });
   });
