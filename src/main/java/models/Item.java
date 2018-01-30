@@ -4,6 +4,7 @@ public class Item {
     private String itemName;
     private double cost;
     private int receiptId;
+    private int userId;
     private int id;
     private int split;
 
@@ -34,6 +35,13 @@ public class Item {
     }
     public int getReceiptId() {
         return this.receiptId;
+    }
+
+    public void setUserId(int id) {
+        this.userId = id;
+    }
+    public int getUserId() {
+        return this.userId;
     }
 
     public void setId(int id) {

@@ -18,11 +18,6 @@ CREATE TABLE IF NOT EXISTS items (
   itemName VARCHAR,
   cost DOUBLE,
   split INTEGER,
+  userId INTEGER,
   receiptId INTEGER
-);
-
-CREATE TABLE IF NOT EXISTS itemid_userid (
-  id int PRIMARY KEY auto_increment,
-  itemId VARCHAR,
-  userId INTEGER
 );

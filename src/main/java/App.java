@@ -11,6 +11,8 @@ import org.sql2o.Sql2o;
 import java.util.HashMap;
 import java.util.Map;
 import static spark.Spark.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
 public class App extends RuntimeException {
     public static void main(String[] args) {
@@ -25,6 +27,11 @@ public class App extends RuntimeException {
         itemDao = new Sql2oItemDao(sql2o);
         userDao = new Sql2oUserDao(sql2o);
         conn = sql2o.open();
+
+
+//        FilterHolder filterHolder = new FilterHolder(CrossOriginFilter.class);
+//        filterHolder.setInitParameter("allowedOrigins", "*");
+//        filterHolder.setInitParameter("allowedMethods", "GET, POST");
 
         //DELETE
 
@@ -85,15 +92,16 @@ public class App extends RuntimeException {
             return gson.toJson(editUser);
         });
 
-//        post("/receipts/:id/items/:itemId/update", (req, res) -> { //process a form to update item
-//            Item editItem = gson.fromJson(req.body(), Item.class);
-//            int idOfItemToEdit = Integer.parseInt(req.params("id"));
-//            String itemName = editItem.getItemName();
-//            double cost = editItem.getCost();
+        post("/receipts/:id/items/:itemId/update", (req, res) -> { //process a form to update item
+            Item editItem = gson.fromJson(req.body(), Item.class);
+            int idOfItemToEdit = Integer.parseInt(req.params("id"));
+            String itemName = editItem.getItemName();
+            double cost = editItem.getCost();
 //            int userId = editItem.getUserId();
-//            itemDao.update(idOfItemToEdit, itemName, cost, userId);
-//            return gson.toJson(editItem);
-//        });
+            int userId = 1;
+            itemDao.update(idOfItemToEdit, itemName, cost, userId);
+            return gson.toJson(editItem);
+        });
 
         //EXCEPTIONS
         exception(ApiException.class, (exc, req, res) -> {
@@ -107,8 +115,43 @@ public class App extends RuntimeException {
         });
 
         //FILTERS
+//        before((req, res) -> {
+//            res.header("Access-Control-Allow-Origin", "*");
+//            res.header("Access-Control-Request-Method", "GET, POST");
+//            // Note: this may or may not be necessary in your particular application
+//            res.type("application/json");
+//        });
         after((req, res) -> {
+//            res.header("Access-Control-Allow-Headers", headers);
             res.type("application/json");
         });
     }
+
+    private static void enableCORS(final String origin, final String methods, final String headers) {
+
+        options("/*", (request, response) -> {
+
+            String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
+            if (accessControlRequestHeaders != null) {
+                response.header("Access-Control-Allow-Headers", accessControlRequestHeaders);
+            }
+
+            String accessControlRequestMethod = request.headers("Access-Control-Request-Method");
+            if (accessControlRequestMethod != null) {
+                response.header("Access-Control-Allow-Methods", accessControlRequestMethod);
+            }
+
+            return "OK";
+        });
+
+        before((request, response) -> {
+            response.header("Access-Control-Allow-Origin", origin);
+            response.header("Access-Control-Request-Method", methods);
+            response.header("Access-Control-Allow-Headers", headers);
+            // Note: this may or may not be necessary in your particular application
+            response.type("application/json");
+        });
+    }
+
+
 }
