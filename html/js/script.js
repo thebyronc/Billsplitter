@@ -38,16 +38,19 @@ $(document).ready(function() {
     });
   });
 
-  $('#testAdd').click(function() {
+  $("#addReceipt").submit(function(event) {
+    event.preventDefault();
+    var name = $("#name").val();
+    alert(name);
     var receipt = {
-      "receiptName": "Pizza Place"
+      "receiptName": name
     };
     $.ajax({
       type: "POST",
       url: "http://localhost:4567/receipts/new",
       data: JSON.stringify(receipt),
       dataType: "json",
-      success: function(data){alert(data);},
+      success: function(data){alert("added");},
       failure: function(errMsg) {
           alert(errMsg);
       }
