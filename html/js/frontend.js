@@ -21,27 +21,28 @@ $(document).ready(function() {
 
 
     $("#addUser").submit(function(event) {
-    event.preventDefault();
-    var name = $("#name").val();
-    alert(name);
-    var email = $("#email").val();
-    alert(email);
-    var person = {
-    "name" : name,
-    "person" : person
-    };
-    $.ajax({
-        type: "POST",
-        url: "http://localhost:4567/users/new",
-        data: JSON.stringify(person),
-        dataType: "json",
-        success: function(data){alert("person added");},
-        failure: function(errMsg){
-            alert(errMsg);
-        }
-     });
-    });
-  });
+         event.preventDefault();
+         var name = $("#name").val();
+         alert(name);
+         var email = $("#email").val();
+         alert(email);
+         var person = {
+         "name" : name,
+         "person" : person
+         };
+         $.ajax({
+             type: "POST",
+             url: "http://localhost:4567/users/new",
+             data: JSON.stringify(person),
+             dataType: "json",
+             success: function(data){alert("person added");},
+             failure: function(errMsg){
+                 alert(errMsg);
+             }
+          });
+         });
+       });
+
 
 
 
