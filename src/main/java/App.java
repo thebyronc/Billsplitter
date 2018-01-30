@@ -29,10 +29,6 @@ public class App extends RuntimeException {
         conn = sql2o.open();
 
 
-//        FilterHolder filterHolder = new FilterHolder(CrossOriginFilter.class);
-//        filterHolder.setInitParameter("allowedOrigins", "*");
-//        filterHolder.setInitParameter("allowedMethods", "GET, POST");
-
         //DELETE
 
 
@@ -97,9 +93,11 @@ public class App extends RuntimeException {
             int idOfItemToEdit = Integer.parseInt(req.params("id"));
             String itemName = editItem.getItemName();
             double cost = editItem.getCost();
+            int split = editItem.getSplit();
+            int idOfReceipt = Integer.parseInt(req.params("receiptId"));
 //            int userId = editItem.getUserId();
-            int userId = 1;
-            itemDao.update(idOfItemToEdit, itemName, cost, userId);
+//            int userId = 1;
+            itemDao.update(idOfItemToEdit, itemName, cost, split,idOfReceipt);
             return gson.toJson(editItem);
         });
 
@@ -115,12 +113,10 @@ public class App extends RuntimeException {
         });
 
         //FILTERS
-//        before((req, res) -> {
-//            res.header("Access-Control-Allow-Origin", "*");
-//            res.header("Access-Control-Request-Method", "GET, POST");
-//            // Note: this may or may not be necessary in your particular application
-//            res.type("application/json");
-//        });
+        before((req, res) -> {
+            res.header("Access-Control-Allow-Origin", "*");
+            res.type("application/json");
+        });
         after((req, res) -> {
 //            res.header("Access-Control-Allow-Headers", headers);
             res.type("application/json");
@@ -144,13 +140,6 @@ public class App extends RuntimeException {
             return "OK";
         });
 
-        before((request, response) -> {
-            response.header("Access-Control-Allow-Origin", origin);
-            response.header("Access-Control-Request-Method", methods);
-            response.header("Access-Control-Allow-Headers", headers);
-            // Note: this may or may not be necessary in your particular application
-            response.type("application/json");
-        });
     }
 
 
