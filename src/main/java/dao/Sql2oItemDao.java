@@ -1,10 +1,12 @@
 package dao;
 
 import models.Item;
+import models.User;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Sql2oItemDao implements ItemDao {
@@ -16,14 +18,27 @@ public class Sql2oItemDao implements ItemDao {
 
     @Override
     public void add(Item item) {
-        String sql = "INSERT INTO receipts (itemName, cost, receiptId) VALUES (itemName, cost, receiptId)";
+        String sql = "INSERT INTO items (itemName, cost, split, receiptId) VALUES (:itemName, :cost, :split, :receiptId)";
         try(Connection con = sql2o.open()){
-            int id = (int) con.createQuery(sql)
+            int id = (int) con.createQuery(sql, true)
                     .bind(item)
                     .executeUpdate()
                     .getKey();
             item.setId(id);
         } catch (Sql2oException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    @Override
+    public void addItemToUser(Item item, User user){
+        String sql = "INSERT INTO itemid_userid (itemId, userId) VALUES (:itemId, :userId)";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .addParameter("itemId", item.getId())
+                    .addParameter("userId", user.getId())
+                    .executeUpdate();
+        } catch (Sql2oException ex){
             System.out.println(ex);
         }
     }
@@ -45,13 +60,28 @@ public class Sql2oItemDao implements ItemDao {
         }
     }
     @Override
-    public List<Item> findItemsByUserId(int id) {
+    public List<Item> findItemsByUserId(int userId) {
+        ArrayList<Item> items = new ArrayList<>();
+
+        String joinQuery = "SELECT itemId FROM itemid_userid WHERE userId=:userId";
+
         try(Connection con = sql2o.open()){
-            return con.createQuery("SELECT * FROM items WHERE userId=:userId")
-                    .addParameter("userId", id)
-                    .executeAndFetch(Item.class);
+            List<Integer> allItemsIds = con.createQuery(joinQuery)
+                    .addParameter("userId", userId)
+                    .executeAndFetch(Integer.class);
+            for (Integer itemId : allItemsIds){
+                String ItemQuery = "SELECT * FROM items WHERE id = :itemId";
+                items.add(
+                        con.createQuery(ItemQuery)
+                            .addParameter("itemId", itemId)
+                            .executeAndFetchFirst(Item.class));
+            }
+        } catch (Sql2oException ex) {
+            System.out.println(ex);
         }
+        return items;
     }
+
     @Override
     public List<Item> getAll() {
         try(Connection con = sql2o.open()){
@@ -61,13 +91,14 @@ public class Sql2oItemDao implements ItemDao {
     }
 
     @Override
-    public void update(int id, String itemName, double cost, int userId) {
-        String sql = "UPDATE items SET (itemName, cost, userId) = (:itemName, :cost, :userId) WHERE id=:id";
+    public void update(int id, String itemName, double cost, int split, int receiptId) {
+        String sql = "UPDATE items SET (itemName, cost, split, receiptId) = (:itemName, :cost, :split, :receiptId) WHERE id=:id";
         try (Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("itemName", itemName)
                     .addParameter("cost", cost)
-                    .addParameter("userId", userId)
+                    .addParameter("split", split)
+                    .addParameter("receiptId", receiptId)
                     .addParameter("id", id)
                     .executeUpdate();
         } catch (Sql2oException ex) {
@@ -80,6 +111,19 @@ public class Sql2oItemDao implements ItemDao {
         try(Connection con = sql2o.open()){
             con.createQuery("DELETE FROM items WHERE id=:id")
                     .addParameter("id", id)
+                    .executeUpdate();
+        } catch (Sql2oException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    @Override
+    public void splitItemById(int id, double cost, double split) {
+        try(Connection con = sql2o.open()){
+            con.createQuery("UPDATE items SET cost = (:cost / :split) WHERE id = :id")
+                    .addParameter("id", id)
+                    .addParameter("cost", cost)
+                    .addParameter("split", split)
                     .executeUpdate();
         } catch (Sql2oException ex) {
             System.out.println(ex);
