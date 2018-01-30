@@ -153,6 +153,4 @@ public class App extends RuntimeException {
             response.type("application/json");
         });
     }
-
-
 }

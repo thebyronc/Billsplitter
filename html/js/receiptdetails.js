@@ -20,12 +20,6 @@ var getAllReceipts = function() {
 $(document).ready(function() {
   getAllReceipts();
 
-  var viewReceiptById = function(id) {
-    var OpenWindow = window.open("receipt-details.html", "mywin", '');
-    OpenWindow.dataFromParent = output; // dataFromParent is a variable in child.html
-    OpenWindow.init();
-  };
-
   $('#testClick').click(function() {
     // let restaurantId = $('#restaurantId').val();
     let receiptId = 1;
@@ -47,6 +41,8 @@ $(document).ready(function() {
     });
   });
 
+
+
   $("#addReceipt").submit(function(event) {
     event.preventDefault();
     var name = $("#name").val();
@@ -66,25 +62,5 @@ $(document).ready(function() {
     getAllReceipts();
   });
 
-  $("#addItem").submit(function(event) {
-    event.preventDefault();
-    var name = $("#name").val();
-    var cost = $("#cost").val();
-    var split = $("#split").val();
-    var item = {
-      "itemName": name,
-      "cost": cost
-      "split": split
-    };
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:4567/receipts/:receiptId/items/new",
-      data: JSON.stringify(receipt),
-      dataType: "json",
-      success: function(){},
-      failure: function(errMsg) {
-        console.log("Error adding item: " + errMsg);
-      }
-    });
-  });
+
 });

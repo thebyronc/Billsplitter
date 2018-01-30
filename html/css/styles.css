@@ -26,3 +26,7 @@
 .list-group li:first-child {
   font-weight: bolder;
 }
+.receiptItem {
+  font-size: 10px;
+  color: #CCCCCC;
+}
