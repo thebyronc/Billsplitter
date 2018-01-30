@@ -1,0 +1,24 @@
+.nav-pills li a {
+  background-color: #757AD1;
+  color: #FFFFFF;
+}
+.nav-pills li a:hover {
+  background-color: #8F95FF;
+  color: #000000;
+}
+.container-fluid {
+  padding: 15px;
+}
+
+.row {
+  padding: 15px 0px;
+}
+
+.btn-purple {
+  background-color: #757AD1;
+  color: #FFFFFF;
+}
+.btn-purple:hover {
+  background-color: #8F95FF;
+  color: #000000;
+}
