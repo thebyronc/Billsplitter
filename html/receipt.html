@@ -23,14 +23,16 @@
         <form id="addReceipt">
 
           <div>
-            <input type="text" class="form-control input-md" id="name">
+            <input type="text" class="form-control input-md" id="name"><br>
             <button class="btn btn-purple" type="submit">Add Receipt</button>
           </div>
 
         </form>
       </div> <!-- end col-md-6 -->
       <div class="col-md-6">
+        <ul class="list-group" id="allReceipts">
 
+        </ul>
       </div> <!-- end col-md-6 -->
     </div> <!-- end row -->
 
@@ -39,14 +41,13 @@
 
 <!--<a href="#" id="testClick">View Receipts ID#1</a>-->
 <!--<br>-->
-<a href="#" id="getAll">Test get All Receipts</a>
+
 <!--<br>-->
 <!--<a href="#" id="testAdd">Add a receipt</a>-->
 
 <p class="name"></p>
 <p class="id"></p>
-<p od="error"></p>
+<p id="error"></p>
 
-<div id="allReceipts"></div>
 </body>
 </html>

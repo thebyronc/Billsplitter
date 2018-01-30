@@ -22,3 +22,7 @@
   background-color: #8F95FF;
   color: #000000;
 }
+
+.list-group li:first-child {
+  font-weight: bolder;
+}

@@ -17,6 +17,7 @@ $(document).ready(function() {
         e.preventDefault(); $(this).parent('div').remove(); x--;
     })
 
+
     $("#addUser").submit(function(event) {
     event.preventDefault();
     var name = $("#name").val();
@@ -82,6 +83,7 @@ $(document).ready(function() {
 //              });
 //});
 
+
 //      $(wrapper).submit(function() {
 //      var name = $("input#name").val();
 //      var email = $("input#email").val();
@@ -117,6 +119,7 @@ $(document).ready(function() {
 //                }
 //            });
 //        });
+
 
 
 
