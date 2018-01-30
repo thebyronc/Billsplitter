@@ -1,18 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Receipt</title>
-    <link href="css/styles.css" type="text/css" rel="stylesheet">
-    <script src="js/jquery-3.3.1.js"></script>
-    <script src="js/script.js"></script>
+  <meta charset="utf-8">
+  <title>Add Receipt</title>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+  <link href="css/styles.css" type="text/css" rel="stylesheet">
+  <script src="js/jquery-3.3.1.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/frontend.js"></script>
 </head>
 <body>
+  <div class="container-fluid">
+    <ul class="nav nav-pills">
+      <li role="presentation"><a href="index.html">Home</a></li>
+      <li role="presentation"><a href="receipt.html">Add Receipt</a></li>
+      <li role="presentation"><a href="#">Add Users</a></li>
+    </ul>
 
+
+    <div class="row">
+      <div class="col-md-6">
+        <form id="addReceipt">
+
+          <div>
+            <input type="text" class="form-control input-md" id="name">
+            <button class="btn btn-purple" type="submit">Add Receipt</button>
+          </div>
+
+        </form>
+      </div> <!-- end col-md-6 -->
+      <div class="col-md-6">
+
+      </div> <!-- end col-md-6 -->
+    </div> <!-- end row -->
+
+
+  </div> <!-- end container -->
 
 <!--<a href="#" id="testClick">View Receipts ID#1</a>-->
 <!--<br>-->
-<!--<a href="#" id="getAll">Test get All Receipts</a>-->
+<a href="#" id="getAll">Test get All Receipts</a>
 <!--<br>-->
 <!--<a href="#" id="testAdd">Add a receipt</a>-->
 
