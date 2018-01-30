@@ -18,23 +18,40 @@ $(document).ready(function() {
     })
 
 
-      $(wrapper).on("click", '.submit', function() {
+      $(wrapper).submit(function() {
       var name = $("input#name").val();
       var email = $("input#email").val();
-//        var person = {
-//          "name": name,
-//          "email": email
-//        };
+        var person = {
+          "name": name,
+          "email": email
+        };
         $.ajax({
           type: "POST",
           url: "http://localhost:4567/users/new",
-          data: JSON.stringify(name, email),
+          data: JSON.stringify(person),
           dataType: "json",
-          success: function(data){alert(data);},
+          success: function(data){alert("user added!");},
           failure: function(errMsg) {
               alert(errMsg);
           }
         });
       });
+
+      $("form.input_fields_wraps").submit(function(){
+        var name = $("input#name").val();
+        var name = $("input#email").val();
+        var person = { "name": name , "email": email };
+        debugger;
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:4567/users/new",
+            data: JSON.stringify(person),
+            dataType: "json",
+            success: function(data){alert("user added!");},
+            failure: function(errMsg) {
+                alert(errMsg);
+                }
+            });
+        });
 });
 
