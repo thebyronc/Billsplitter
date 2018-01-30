@@ -51,7 +51,7 @@ public class Item {
         return this.id;
     }
 
-    public double getSplit() {
+    public int getSplit() {
        return this.split;
     }
 }
