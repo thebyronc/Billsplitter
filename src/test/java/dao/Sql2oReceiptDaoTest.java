@@ -73,6 +73,16 @@ public class Sql2oReceiptDaoTest {
         assertEquals(0, receiptDao.getAll().size());
     }
 
+    @Test
+    public void clearAllClearsAll() throws Exception {
+        Receipt receipt = setupNewReceipt();
+        Receipt receipt1 = setupNewReceipt();
+        receiptDao.add(receipt);
+        receiptDao.add(receipt1);
+        receiptDao.clearAll();
+        assertEquals(0,receiptDao.getAll().size());
+    }
+
     public Receipt setupNewReceipt() {
         return new Receipt("PizzaPizza");
     }

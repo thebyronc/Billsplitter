@@ -69,4 +69,15 @@ public class Sql2oReceiptDao implements ReceiptDao {
             System.out.println(ex);
         }
     }
+
+    @Override
+    public void clearAll() {
+        String sql = "DELETE FROM receipts";
+        try(Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .executeUpdate();
+        } catch(Sql2oException ex) {
+            System.out.println(ex);
+        }
+    }
 }

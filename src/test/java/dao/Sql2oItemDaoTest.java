@@ -17,9 +17,7 @@ import static org.junit.Assert.*;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.*;
 
-/**
- * Created by Guest on 1/30/18.
- */
+
 public class Sql2oItemDaoTest {
     private Sql2oItemDao itemDao;
     private Sql2oUserDao userDao;
@@ -130,13 +128,31 @@ public class Sql2oItemDaoTest {
     }
 
     @Test
-    public void splitItemById() throws Exception {
+    public void deletingByItemAlsoUpdatesJoinTable() throws Exception {
+        User user = setupNewUser();
+        userDao.add(user);
+
         Item item = setupNewItem();
         itemDao.add(item);
-        int id = item.getId();
-        itemDao.splitItemById(id, 10, 2);
-        assertEquals(5.0, itemDao.findById(id).getCost());
+
+        Item item1 = setupNewItem();
+        itemDao.add(item1);
+        itemDao.addItemToUser(item,user);
+        itemDao.addItemToUser(item1,user);
+        itemDao.deleteById(item.getId());
+
+
+        assertEquals(0,itemDao.getAllUsersForAItem(item.getId()).size());// need get all users for a item
     }
+
+//    @Test
+//    public void splitItemById() throws Exception {
+//        Item item = setupNewItem();
+//        itemDao.add(item);
+//        int id = item.getId();
+//        itemDao.splitItemById(id, 10, 2);
+//        assertEquals(5.0, itemDao.findById(id).getCost());
+//    }
 
     public Item setupNewItem() {
         return new Item("fries", 10, 2, 1);
@@ -147,6 +163,10 @@ public class Sql2oItemDaoTest {
     }
     public Item setupNewItem3() {
         return new Item("drink", 5, 1, 2);
+    }
+
+    public User setupNewUser() {
+        return new User("Byron", "byron@email.com");
     }
 
 

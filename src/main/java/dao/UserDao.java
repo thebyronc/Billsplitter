@@ -12,4 +12,5 @@ public interface UserDao {
     void update(int id, String name, String email);
 
     void deleteById(int id);
+    void clearAll();
 }
