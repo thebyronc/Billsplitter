@@ -16,8 +16,8 @@
   <div class="container-fluid">
     <ul class="nav nav-pills">
       <li role="presentation"><a href="index.html">Home</a></li>
-      <li role="presentation"><a href="receipt.html">Add Receipt</a></li>
-      <li role="presentation"><a href="#">Add Users</a></li>
+      <li role="presentation"><a href="receipt.html">Receipts</a></li>
+      <li role="presentation"><a href="index.html">Users</a></li>
     </ul>
 
 
@@ -28,17 +28,16 @@
         <form id="addItem" class="form-inline">
 
             <div class="form-group">
-              <input type="text" class="form-control" id="itemName" placeholder="Receipt Item">
+              <input type="text" class="form-control" id="itemName" placeholder="Item">
             </div>
             <div class="input-group">
               <div class="input-group-addon">$</div>
               <input type="number" class="form-control" id="itemCost" placeholder="Amount 00.00">
             </div>
-            <div class="form-group">
+            <div class="form-group" >
               <input type="number" class="form-control" id="itemSplit" placeholder="Split" value="1">
             </div>
-            <br><br>
-            <button class="btn btn-purple" type="submit">Add Items</button>
+            <button class="btn btn-purple" type="submit">Add</button>
 
         </form>
         <h3>ALL ITEMS</h3>
@@ -46,12 +45,12 @@
 
         </ul>
       </div> <!-- end col-md-6 -->
-      <div class="col-md-6">
         <h3>RECEIPT TOTAL</h3>
-          <h4 id="runningTotal"></h4>
+          <H1 id="runningTotal" class="text-success"></H1>
 
+        <h3>RECEIPT DETAILS</h3>
+      </div>
 
-      </div> <!-- end col-md-6 -->
     </div> <!-- end row -->
 
 
