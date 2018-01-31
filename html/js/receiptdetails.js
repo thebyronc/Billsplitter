@@ -99,30 +99,25 @@ $(document).ready(function() {
     });
 
   var runningTotal = function() {
-    var receiptId = localStorage.getItem("receiptId");
-    var name = $("#itemName").val();
-    var cost = parseFloat($("#itemCost").val());
-    var split = parseInt($("#itemSplit").val());
-    var total =0;
-    var item = {
-      "itemName": name,
-      "cost": cost/split,
-      "receiptId": receiptId
-    };
-    {
-    for (i = 0 ; i < response.length; i++ ){
-        response[i].cost += total;
-    $.ajax({
+      var receiptId = localStorage.getItem("receiptId");
+      $.ajax({
         url: "http://localhost:4567/receipts/" + receiptId + "/items",
         type: 'GET',
         data: {
           format: 'json'
         },
-    });
+        success: function(response) {
+          var totalCost = 0;
+          for (i = 0 ; i < response.length; i++ ){
+             totalCost += response[i].cost;
+          }
+          $("#runningTotal").text("$" + totalCost);
+        },
+        error: function() {
+          alert("Get all item Error");
+        }
+      });
     }
-    $("#runningTotal").text(total);
-    }
-}
   getAllItems();
   getAllUsers();
   runningTotal();
