@@ -9,11 +9,11 @@ var getAllItems = function() {
     },
     success: function(response) {
       for (i = 0 ; i < response.length; i++ ){
-          $('#allReceipts').prepend(`<li class="list-group-item"><span class="receiptItem">Item:</span> ${response[i].itemName} <br> <span class="receiptItem">Cost:</span> ${response[i].cost} </li>`);
+          $('#allItems').prepend(`<li class="list-group-item"> <span class="receiptItem">Item:</span> ${response[i].itemName} <span class="receiptItem">Cost:</span> ${response[i].cost} | <span class="receiptItem">Assigned To:</span> ${response[i].userId}</li>`);
       }
     },
     error: function() {
-      $('#errors').text("There was an error processing your request. Please try again.")
+      alert("Get all item Error");
     }
   });
 }
@@ -48,8 +48,8 @@ $(document).ready(function() {
     event.preventDefault();
     var receiptId = localStorage.getItem("receiptId");
     var name = $("#itemName").val();
-    var cost = $("#itemCost").val();
-    var split = $("#itemSplit").val();
+    var cost = parseFloat($("#itemCost").val());
+    var split = parseInt($("#itemSplit").val());
     var item = {
       "itemName": name,
       "cost": cost,
@@ -61,12 +61,13 @@ $(document).ready(function() {
       url: "http://localhost:4567/receipts/" + receiptId + "/items/new",
       data: JSON.stringify(item),
       dataType: "json",
-      success: function(){},
+      success: function(){alert("added")},
       failure: function(errMsg) {
         console.log("Error adding receipt: " + errMsg);
       }
     });
     getAllItems();
+    $("#addItem")[0].reset();
   });
 
 

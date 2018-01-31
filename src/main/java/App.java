@@ -40,7 +40,7 @@ public class App extends RuntimeException {
             return gson.toJson(receipt);
         });
 
-        post("/receipts/:receiptId/items/new","applcation/json", (req, res) -> { //show form to create new item
+        post("/receipts/:receiptId/items/new","application/json", (req, res) -> { //show form to create new item
             Item item = gson.fromJson(req.body(), Item.class);
             itemDao.add(item);
             res.status(201);

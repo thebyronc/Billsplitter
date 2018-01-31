@@ -62,13 +62,10 @@ $(document).ready(function() {
       type: "POST",
       url: "http://localhost:4567/receipts/new",
       data: JSON.stringify(receipt),
-      dataType: "json",
-      success: function(){},
-      failure: function(errMsg) {
-        console.log("Error adding receipt: " + errMsg);
-      }
+      dataType: "json"
     });
     getAllReceipts();
+    $("#addReceipt")[0].reset();
   });
 
 });
