@@ -69,63 +69,56 @@ $(document).ready(function() {
     });
   });
 
-
-
   $("#addItem").submit(function(event) {
-    event.preventDefault();
-    var receiptId = localStorage.getItem("receiptId");
-    var name = $("#itemName").val();
-    var cost = parseFloat($("#itemCost").val());
-    var split = parseInt($("#itemSplit").val());
-    var item = {
-      "itemName": name,
-      "cost": cost/split,
-      "receiptId": receiptId
-    };
-    for (i = 0; i < split; i++) {
+      event.preventDefault();
+      var receiptId = localStorage.getItem("receiptId");
+      var name = $("#itemName").val();
+      var cost = parseFloat($("#itemCost").val());
+      var split = parseInt($("#itemSplit").val());
+      var item = {
+        "itemName": name,
+        "cost": cost/split,
+        "receiptId": receiptId
+      };
+      for (i = 0; i < split; i++) {
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:4567/receipts/" + receiptId + "/items/new",
+          data: JSON.stringify(item),
+          dataType: "json",
+          success: function(){
+            console.log("Success adding: " + item);
+          },
+          failure: function(errMsg) {
+            console.log("Error adding receipt: " + errMsg);
+          }
+        });
+        getAllItems();
+      }
+      $("#addItem")[0].reset();
+    });
+
+  var runningTotal = function() {
+      var receiptId = localStorage.getItem("receiptId");
       $.ajax({
-        type: "POST",
-        url: "http://localhost:4567/receipts/" + receiptId + "/items/new",
-        data: JSON.stringify(item),
-        dataType: "json",
-        success: function(){
-          console.log("Success adding: " + item);
+        url: "http://localhost:4567/receipts/" + receiptId + "/items",
+        type: 'GET',
+        data: {
+          format: 'json'
         },
-        failure: function(errMsg) {
-          console.log("Error adding receipt: " + errMsg);
+        success: function(response) {
+          var totalCost = 0;
+          for (i = 0 ; i < response.length; i++ ){
+             totalCost += response[i].cost;
+          }
+          $("#runningTotal").text("$" + totalCost);
+        },
+        error: function() {
+          alert("Get all item Error");
         }
       });
-      getAllItems();
-    }
-    $("#addItem")[0].reset();
-  });
-  var runningTotal = function() {
-    event.preventDefault();
-    var receiptId = localStorage.getItem("receiptId");
-    var name = $("#itemName").val();
-    var cost = parseFloat($("#itemCost").val());
-    var split = parseInt($("#itemSplit").val());
-    var total =0;
-    var item = {
-      "itemName": name,
-      "cost": cost/split,
-      "receiptId": receiptId
-                };
-    for (i = 0; i < item.length; i++) {
-        cost += total;
-    $.ajax({
-              type: "POST",
-              url: "http://localhost:4567/receipts/" + receiptId + "/items/new",
-              data: JSON.stringify(item),
-              dataType: "json",
-              success: function(){},
-              failure: function(errMsg) {
-                console.log("Error adding receipt: " + errMsg);
-              }
-            });
-        }
-        document.getElementById("runningTotal").innerHTML(runningTotal);
     }
   getAllItems();
   getAllUsers();
+  runningTotal();
 });
