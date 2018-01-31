@@ -1,5 +1,5 @@
 var getAllUsers = function() {
-    $('#allUsers').html(''),
+    $('#allUsers').html('');
     $.ajax({
         url: "http://localhost:4567/users",
         type: 'GET',
@@ -8,17 +8,19 @@ var getAllUsers = function() {
         },
         success: function(response) {
             for(i = 0; i < response.length; i++ ){
-            $('#allUsers').prepend(`<li class="list-group-item">ID:${response[i].id} User Name: ${response[i].userName} </li>`);
+                $('#allUsers').prepend(`<li class="list-group-item"><span class="userName">USER:</span> ${response[i].name} <br> <span class="userName">ID:</span> ${response[i].id} </li>`);
             }
         },
         error: function(){
             $('#errors').text("There was an error processing your request. Please try again.")
         }
-    });
+  });
 }
 
 $(document).ready(function() {
     getAllUsers();
+
+
 //    var max_fields      = 10; //maximum input boxes allowed
 //    var wrapper         = $(".input_fields_wrap"); //Fields wrapper
 //    var add_button      = $(".add_field_button"); //Add button ID
@@ -36,10 +38,6 @@ $(document).ready(function() {
 //    $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
 //        e.preventDefault(); $(this).parent('div').remove(); x--;
 //    })
-
-
-
-
 
     $("#addUser").submit(function(event) {
     event.preventDefault();
