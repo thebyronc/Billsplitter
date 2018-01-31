@@ -20,13 +20,12 @@ public class Sql2oItemDao implements ItemDao {
     @Override
     public void add(Item item) {
 
-        String sql = "INSERT INTO items (itemName, cost, tip, receiptId) VALUES (:itemName, :cost, :tip, :receiptId)";
+        String sql = "INSERT INTO items (itemName, cost, receiptId) VALUES (:itemName, :cost, :receiptId)";
 
         try (Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql, true)
                     .addParameter("itemName", item.getItemName())
                     .addParameter("cost", item.getCost())
-                    .addParameter("tip", item.getTip())
                     .addParameter("receiptId", item.getReceiptId())
                     .executeUpdate()
                     .getKey();
@@ -100,7 +99,7 @@ public class Sql2oItemDao implements ItemDao {
     @Override
 
     public void update(int id, String itemName, double cost, int userId) {
-        String sql = "UPDATE items SET (itemName, cost, tip, userId) = (:itemName, :cost, :tip, :userId) WHERE id=:id";
+        String sql = "UPDATE items SET (itemName, cost, userId) = (:itemName, :cost, :userId) WHERE id=:id";
 
         try (Connection con = sql2o.open()) {
             con.createQuery(sql)
