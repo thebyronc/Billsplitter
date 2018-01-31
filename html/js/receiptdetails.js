@@ -1,14 +1,15 @@
-var getAllReceipts = function() {
+var getAllItems = function() {
   $('#allReceipts').html('');
+  var receiptId = localStorage.getItem("receiptId");
   $.ajax({
-    url: "http://localhost:4567/receipts",
+    url: "http://localhost:4567/receipts/" + receiptId + "/items",
     type: 'GET',
     data: {
       format: 'json'
     },
     success: function(response) {
       for (i = 0 ; i < response.length; i++ ){
-          $('#allReceipts').prepend(`<li class="list-group-item"><span class="receiptItem">RESTAURANT:</span> ${response[i].receiptName} <br> <span class="receiptItem">ID:</span> ${response[i].id} </li>`);
+          $('#allReceipts').prepend(`<li class="list-group-item"><span class="receiptItem">Item:</span> ${response[i].itemName} <br> <span class="receiptItem">Cost:</span> ${response[i].cost} </li>`);
       }
     },
     error: function() {
@@ -18,7 +19,7 @@ var getAllReceipts = function() {
 }
 
 $(document).ready(function() {
-  getAllReceipts();
+  getAllItems();
 
   $('#testClick').click(function() {
     // let restaurantId = $('#restaurantId').val();
@@ -43,23 +44,29 @@ $(document).ready(function() {
 
 
 
-  $("#addReceipt").submit(function(event) {
+  $("#addItem").submit(function(event) {
     event.preventDefault();
-    var name = $("#name").val();
-    var receipt = {
-      "receiptName": name
+    var receiptId = localStorage.getItem("receiptId");
+    var name = $("#itemName").val();
+    var cost = $("#itemCost").val();
+    var split = $("#itemSplit").val();
+    var item = {
+      "itemName": name,
+      "cost": cost,
+      "split": split,
+      "receiptId": receiptId
     };
     $.ajax({
       type: "POST",
-      url: "http://localhost:4567/receipts/new",
-      data: JSON.stringify(receipt),
+      url: "http://localhost:4567/receipts/" + receiptId + "/items/new",
+      data: JSON.stringify(item),
       dataType: "json",
       success: function(){},
       failure: function(errMsg) {
         console.log("Error adding receipt: " + errMsg);
       }
     });
-    getAllReceipts();
+    getAllItems();
   });
 
 
