@@ -36,6 +36,7 @@ var clearAll = function() {
     });
 }
 
+
 $(document).ready(function() {
     getAllUsers();
 
