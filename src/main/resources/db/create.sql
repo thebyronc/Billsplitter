@@ -21,3 +21,9 @@ CREATE TABLE IF NOT EXISTS items (
   userId INTEGER,
   receiptId INTEGER
 );
+
+CREATE TABLE IF NOT EXISTS itemId_UserId (
+    id int PRIMARY KEY auto_increment,
+    itemId INTEGER,
+    userId INTEGER
+);
