@@ -41,6 +41,15 @@ public class App extends RuntimeException {
             return gson.toJson(allUsers);
         });
 
+        post("receipts/deleteAll", "application/json", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Receipt> allReceipts = receiptDao.getAll();
+            model.put("receipts", allReceipts);
+            receiptDao.clearAll();
+            response.status(201);
+            return gson.toJson(allReceipts);
+        });
+
 
 
         //CREATE
