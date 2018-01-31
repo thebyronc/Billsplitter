@@ -9,9 +9,7 @@ var getAllUsers = function() {
         success: function(response) {
             for(i = 0; i < response.length; i++ ){
 
-                $('#allUsers').prepend(`<li class="list-group-item"><span class="userName">USER:</span> ${response[i].name} <br> <span class="userName">EMAIL:</span> ${response[i].email} <br><span class="userName">ID:</span> ${response[i].id} Test: <a href="userdetail.html" onclick="viewUserById(${response[i].id})"> View Receipt by id</a> </li>`);
-
-
+                $('#allUsers').prepend(`<li class="list-group-item"><span class="userName">USER:</span> ${response[i].name} <br> <span class="userName">EMAIL:</span> ${response[i].email} <br><span class="userName">ID:</span> ${response[i].id} Test: <a href="#" onclick="viewUserById(${response[i].id})"> View User by id</a> </li>`);
             }
         },
         error: function(){
@@ -19,6 +17,14 @@ var getAllUsers = function() {
         }
   });
 }
+
+var viewUserById = function(id) {
+  var output = id;
+  localStorage.setItem("Id", id); //!!!!! Review this code !!!!!!
+  var OpenWindow = window.open(`userdetail.html#${output}`, "_self", '');
+  OpenWindow.dataFromParent = output; // dataFromParent is a variable in child.html
+  OpenWindow.init();
+};
 
 var clearAll = function() {
     $('#allUsers').html('');
@@ -30,6 +36,8 @@ var clearAll = function() {
         },
     });
 }
+
+
 
 $(document).ready(function() {
     getAllUsers();
