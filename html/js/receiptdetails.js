@@ -9,7 +9,13 @@ var getAllItems = function() {
     },
     success: function(response) {
       for (i = 0 ; i < response.length; i++ ){
-          $('#allItems').prepend(`<li class="list-group-item"> <span class="receiptItem">Item:</span> ${response[i].itemName} <span class="receiptItem">Cost:</span> ${response[i].cost} | <span class="receiptItem">Assigned To:</span> ${response[i].userId}</li>`);
+          $('#allItems').prepend(`
+            <li class="list-group-item">
+            <span class="receiptItem">ITEM:</span> ${response[i].itemName}
+            <span class="receiptItem">COST:</span> ${response[i].cost}
+            <span class="receiptItem">| ASSIGNED TO:</span> ${response[i].userId}
+            </li>
+            `);
       }
     },
     error: function() {
@@ -50,24 +56,25 @@ $(document).ready(function() {
     var name = $("#itemName").val();
     var cost = parseFloat($("#itemCost").val());
     var split = parseInt($("#itemSplit").val());
-    for (i = 0; i <= split; i++)
-        var item = {
-          "itemName": name,
-          "cost": cost/split,
-          //"split": split,
-          "receiptId": receiptId
-        };
+    var item = {
+              "itemName": name,
+              "cost": cost/split,
+              "receiptId": receiptId
+            };
+    for (i = 0; i < split; i++) {
     $.ajax({
-      type: "POST",
-      url: "http://localhost:4567/receipts/" + receiptId + "/items/new",
-      data: JSON.stringify(item),
-      dataType: "json",
-      success: function(){alert("added")},
-      failure: function(errMsg) {
-        console.log("Error adding receipt: " + errMsg);
-      }
-    });
-    getAllItems();
+          type: "POST",
+          url: "http://localhost:4567/receipts/" + receiptId + "/items/new",
+          data: JSON.stringify(item),
+          dataType: "json",
+          success: function(){},
+          failure: function(errMsg) {
+            console.log("Error adding receipt: " + errMsg);
+          }
+        });
+        getAllItems();
+    }
+
     $("#addItem")[0].reset();
   });
 

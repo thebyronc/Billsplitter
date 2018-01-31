@@ -19,7 +19,7 @@ public class Sql2oItemDao implements ItemDao {
 
     @Override
     public void add(Item item) {
-        String sql = "INSERT INTO items (itemName, cost, split, receiptId) VALUES (:itemName, :cost, :split, :receiptId)";
+        String sql = "INSERT INTO items (itemName, cost, receiptId) VALUES (:itemName, :cost, :receiptId)";
         try (Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql, true)
                     .bind(item)
@@ -95,12 +95,11 @@ public class Sql2oItemDao implements ItemDao {
 
     @Override
     public void update(int id, String itemName, double cost, int split, int receiptId) {
-        String sql = "UPDATE items SET (itemName, cost, split, receiptId) = (:itemName, :cost, :split, :receiptId) WHERE id=:id";
+        String sql = "UPDATE items SET (itemName, cost, receiptId) = (:itemName, :cost, :receiptId) WHERE id=:id";
         try (Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("itemName", itemName)
                     .addParameter("cost", cost)
-                    .addParameter("split", split)
                     .addParameter("receiptId", receiptId)
                     .addParameter("id", id)
                     .executeUpdate();
@@ -144,20 +143,5 @@ public class Sql2oItemDao implements ItemDao {
               System.out.println(ex);
         }
         return users;
-    }
-
-
-
-    @Override
-    public void splitItemById(int id, double cost, int split) {
-        try(Connection con = sql2o.open()){
-            con.createQuery("UPDATE items SET cost = (:cost / :split) WHERE id = :id")
-                    .addParameter("id", id)
-                    .addParameter("cost", cost)
-                    .addParameter("split", split)
-                    .executeUpdate();
-        } catch (Sql2oException ex) {
-            System.out.println(ex);
-        }
     }
 }
