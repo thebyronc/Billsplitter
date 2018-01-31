@@ -32,7 +32,7 @@ public class App extends RuntimeException {
 
         //DELETE
 
-        post("/users/deleteAll", (request, response) -> {
+        post("/users/deleteAll","application/json", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             List<User> allUsers = userDao.getAll();
             model.put("users", allUsers);
