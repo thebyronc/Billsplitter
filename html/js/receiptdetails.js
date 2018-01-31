@@ -9,8 +9,18 @@ var getAllItems = function() {
     },
     success: function(response) {
       for (i = 0 ; i < response.length; i++ ){
-          $('#allItems').prepend(`<li class="list-group-item"> <span class="receiptItem">Item:</span> ${response[i].itemName} <span class="receiptItem">Cost:</span> ${response[i].cost} | <span class="receiptItem">Assigned To:</span> ${response[i].userId}</li>`);
+          $('#allItems').prepend(`
+            <li class="list-group-item">
+              <span class="receiptItem">ITEM:</span> ${response[i].itemName}
+              <span class="receiptItem">COST:</span> ${response[i].cost}
+              <span class="receiptItem">| ASSIGNED TO:</span>
+              <form class="userSelect"><select class="userOptions" onchange="this.form.submit()">
+
+              </select></form>
+            </li>
+            `);
       }
+
     },
     error: function() {
       alert("Get all item Error");
@@ -19,7 +29,24 @@ var getAllItems = function() {
 }
 
 $(document).ready(function() {
-  getAllItems();
+
+  var getAllUsers = function() {
+    $.ajax({
+      url: "http://localhost:4567/users",
+      type: 'GET',
+      data: {
+        format: 'json'
+      },
+      success: function(response) {
+        response.forEach(function(user) {
+          $(".userOptions").append(`<option value="${user.id}">${user.name}</option>`);
+        });
+      },
+      error: function() {
+        console.log("Get all user Error");
+      }
+    });
+  }
 
   $('#testClick').click(function() {
     // let restaurantId = $('#restaurantId').val();
@@ -52,23 +79,25 @@ $(document).ready(function() {
     var split = parseInt($("#itemSplit").val());
     var item = {
       "itemName": name,
-      "cost": cost,
-      "split": split,
+      "cost": cost/split,
       "receiptId": receiptId
     };
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:4567/receipts/" + receiptId + "/items/new",
-      data: JSON.stringify(item),
-      dataType: "json",
-      success: function(){alert("added")},
-      failure: function(errMsg) {
-        console.log("Error adding receipt: " + errMsg);
-      }
-    });
-    getAllItems();
+    for (i = 0; i < split; i++) {
+      $.ajax({
+        type: "POST",
+        url: "http://localhost:4567/receipts/" + receiptId + "/items/new",
+        data: JSON.stringify(item),
+        dataType: "json",
+        success: function(){},
+        failure: function(errMsg) {
+          console.log("Error adding receipt: " + errMsg);
+        }
+      });
+      getAllItems();
+    }
     $("#addItem")[0].reset();
   });
 
-
+  getAllItems();
+  getAllUsers();
 });

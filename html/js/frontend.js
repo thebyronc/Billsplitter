@@ -17,6 +17,18 @@ var getAllUsers = function() {
   });
 }
 
+var clearAll = function() {
+    $('#allUsers').html('');
+    $.ajax({
+        url: "http://localhost:4567/users",
+        type: 'GET',
+        data: {
+            format: 'json'
+        },
+    });
+}
+
+
 $(document).ready(function() {
     getAllUsers();
 
@@ -33,18 +45,29 @@ $(document).ready(function() {
         url: "http://localhost:4567/users/new",
         data: JSON.stringify(person),
         dataType: "json",
+        });
+        getAllUsers();
+    });
+
+    clearAll();
+    $("#clearUsers").click(function(event) {
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:4567/users/deleteAll",
+        data: JSON.stringify(),
+        dataType: "json",
         success: function(){},
         failure: function(errMsg){
-            console.log("Error adding User: " + errMsg);
+            console.log("Error adding User:" + errMsg);
         }
-     });
-     getAllUsers();
     });
-    ()
+    clearAll();
+    })
+});
 
 
 
- });
 
 
 
