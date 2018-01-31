@@ -8,7 +8,7 @@ var getAllReceipts = function() {
     },
     success: function(response) {
       for (i = 0 ; i < response.length; i++ ){
-          $('#allReceipts').prepend(`<li class="list-group-item"><span class="receiptItem">RESTAURANT:</span> ${response[i].receiptName} <br> <span class="receiptItem">ID:</span> ${response[i].id} </li>`);
+          $('#allReceipts').prepend(`<li class="list-group-item"><span class="receiptItem">RESTAURANT:</span> ${response[i].receiptName} <br> <span class="receiptItem">ID:</span> ${response[i].id} Test: <a href="#" onclick="viewReceiptById(${response[i].id})"> View Receipt by id</a> </li>`);
       }
     },
     error: function() {
@@ -17,14 +17,19 @@ var getAllReceipts = function() {
   });
 }
 
+var viewReceiptById = function(id) {
+  var output = id;
+  localStorage.setItem("receiptId", id);
+  var OpenWindow = window.open(`receipt-details.html#${output}`, "_self", '');
+  OpenWindow.dataFromParent = output; // dataFromParent is a variable in child.html
+  OpenWindow.init();
+
+
+};
+
 $(document).ready(function() {
   getAllReceipts();
 
-  var viewReceiptById = function(id) {
-    var OpenWindow = window.open("receipt-details.html", "mywin", '');
-    OpenWindow.dataFromParent = output; // dataFromParent is a variable in child.html
-    OpenWindow.init();
-  };
 
   $('#testClick').click(function() {
     // let restaurantId = $('#restaurantId').val();
@@ -57,13 +62,10 @@ $(document).ready(function() {
       type: "POST",
       url: "http://localhost:4567/receipts/new",
       data: JSON.stringify(receipt),
-      dataType: "json",
-      success: function(){},
-      failure: function(errMsg) {
-        console.log("Error adding receipt: " + errMsg);
-      }
+      dataType: "json"
     });
     getAllReceipts();
+    $("#addReceipt")[0].reset();
   });
 
 });
