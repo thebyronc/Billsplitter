@@ -8,7 +8,7 @@ var getAllUsers = function() {
         },
         success: function(response) {
             for(i = 0; i < response.length; i++ ){
-                $('#allUsers').prepend(`<li class="list-group-item"><span class="userName">USER:</span> ${response[i].name} <br> <span class="userName">ID:</span> ${response[i].id} </li>`);
+                $('#allUsers').prepend(`<li class="list-group-item"><span class="userName">USER:</span> ${response[i].name} <br> <span class="userName">EMAIL:</span> ${response[i].email} <br><span class="userName">ID:</span> ${response[i].id} </li>`);
             }
         },
         error: function(){
@@ -42,43 +42,26 @@ $(document).ready(function() {
     $("#addUser").submit(function(event) {
     event.preventDefault();
     var name = $("#name").val();
-    alert(name);
     var email = $("#email").val();
-    alert(email);
     var person = {
     "name" : name,
-    "person" : person
+    "email" : email
     };
     $.ajax({
         type: "POST",
         url: "http://localhost:4567/users/new",
         data: JSON.stringify(person),
         dataType: "json",
-        success: function(data){alert("person added");},
+        success: function(){},
         failure: function(errMsg){
-            alert(errMsg);
+            console.log("Error adding User: " + errMsg);
         }
      });
+     getAllUsers();
     });
 
-     $("form.input_fields_wraps").submit(function(event){
-        event.preventDefault()
-        var name = $("input#name").val();
-        var name = $("input#email").val();
-        var person = { "name": name , "email": email };
-            $.ajax({
-                type: "POST",
-                url: "http://localhost:4567/users/new",
-                data: JSON.stringify(person),
-                dataType: "json",
-                success: function(data){alert("user added!");},
-                failure: function(errMsg) {
-                    alert(errMsg);
-                }
-            });
-      });
+ });
 
-  });
 
 
 
