@@ -14,9 +14,8 @@ public interface ItemDao {
 
     List<Item> findItemsByReceiptId(int id);
     List<Item> findItemsByUserId(int userId);
-    void update(int id, String itemName, double cost, int receiptId);
+    void update(int id, String itemName, double cost, int userId);
 
     void deleteById(int id);
-  
-    void splitItemById(int id, double cost, int getSplit);
+
 }
