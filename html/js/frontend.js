@@ -1,5 +1,5 @@
 var getAllUsers = function() {
-    $('#allUsers').html(''),
+    $('#allUsers').html('');
     $.ajax({
         url: "http://localhost:4567/users",
         type: 'GET',
@@ -8,17 +8,19 @@ var getAllUsers = function() {
         },
         success: function(response) {
             for(i = 0; i < response.length; i++ ){
-            $('#allUsers').prepend(`<li class="list-group-item">ID:${response[i].id} User Name: ${response[i].userName} </li>`);
+                $('#allUsers').prepend(`<li class="list-group-item"><span class="userName">USER:</span> ${response[i].name} <br> <span class="userName">EMAIL:</span> ${response[i].email} <br><span class="userName">ID:</span> ${response[i].id} </li>`);
             }
         },
         error: function(){
             $('#errors').text("There was an error processing your request. Please try again.")
         }
-    });
+  });
 }
 
 $(document).ready(function() {
     getAllUsers();
+
+
 //    var max_fields      = 10; //maximum input boxes allowed
 //    var wrapper         = $(".input_fields_wrap"); //Fields wrapper
 //    var add_button      = $(".add_field_button"); //Add button ID
@@ -37,50 +39,29 @@ $(document).ready(function() {
 //        e.preventDefault(); $(this).parent('div').remove(); x--;
 //    })
 
-
-
-
-
     $("#addUser").submit(function(event) {
     event.preventDefault();
     var name = $("#name").val();
-    alert(name);
     var email = $("#email").val();
-    alert(email);
     var person = {
     "name" : name,
-    "person" : person
+    "email" : email
     };
     $.ajax({
         type: "POST",
         url: "http://localhost:4567/users/new",
         data: JSON.stringify(person),
         dataType: "json",
-        success: function(data){alert("person added");},
+        success: function(){},
         failure: function(errMsg){
-            alert(errMsg);
+            console.log("Error adding User: " + errMsg);
         }
      });
+     getAllUsers();
     });
 
-     $("form.input_fields_wraps").submit(function(event){
-        event.preventDefault()
-        var name = $("input#name").val();
-        var name = $("input#email").val();
-        var person = { "name": name , "email": email };
-            $.ajax({
-                type: "POST",
-                url: "http://localhost:4567/users/new",
-                data: JSON.stringify(person),
-                dataType: "json",
-                success: function(data){alert("user added!");},
-                failure: function(errMsg) {
-                    alert(errMsg);
-                }
-            });
-      });
+ });
 
-  });
 
 
 
