@@ -17,7 +17,6 @@ CREATE TABLE IF NOT EXISTS items (
   id int PRIMARY KEY auto_increment,
   itemName VARCHAR,
   cost DOUBLE,
-  split INTEGER,
   userId INTEGER,
   receiptId INTEGER
 );
