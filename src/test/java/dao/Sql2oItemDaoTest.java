@@ -145,14 +145,14 @@ public class Sql2oItemDaoTest {
         assertEquals(0,itemDao.getAllUsersForAItem(item.getId()).size());// need get all users for a item
     }
 
-//    @Test
-//    public void splitItemById() throws Exception {
-//        Item item = setupNewItem();
-//        itemDao.add(item);
-//        int id = item.getId();
-//        itemDao.splitItemById(id, 10, 2);
-//        assertEquals(5.0, itemDao.findById(id).getCost());
-//    }
+    @Test
+    public void splitItemById() throws Exception {
+        Item item = setupNewItem();
+        itemDao.add(item);
+        int id = item.getId();
+        itemDao.splitItemById(id, 10, 2);
+        assertEquals(5.0, itemDao.findById(id).getCost());
+    }
 
     public Item setupNewItem() {
         return new Item("fries", 10, 2, 1);
