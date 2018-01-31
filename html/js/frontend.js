@@ -8,7 +8,7 @@ var getAllUsers = function() {
         },
         success: function(response) {
             for(i = 0; i < response.length; i++ ){
-                $('#allUsers').prepend(`<li class="list-group-item"><span class="userName">USER:</span> ${response[i].name} <br> <span class="userName">EMAIL:</span> ${response[i].email} <br><span class="userName">ID:</span> ${response[i].id} </li>`);
+                $('#allUsers').prepend(`<li class="list-group-item"><span class="userName">USER:</span> ${response[i].name} <br> <span class="userName">EMAIL:</span> ${response[i].email} <br><span class="userName">ID:</span></li>`);
             }
         },
         error: function(){
@@ -27,7 +27,6 @@ var clearAll = function() {
         },
     });
 }
-
 
 $(document).ready(function() {
     getAllUsers();
@@ -50,6 +49,7 @@ $(document).ready(function() {
     });
 
     clearAll();
+
     $("#clearUsers").click(function(event) {
     event.preventDefault();
     $.ajax({
