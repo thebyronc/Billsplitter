@@ -57,22 +57,24 @@ $(document).ready(function() {
     var cost = parseFloat($("#itemCost").val());
     var split = parseInt($("#itemSplit").val());
     var item = {
-      "itemName": name,
-      "cost": cost,
-      "split": split,
-      "receiptId": receiptId
-    };
+              "itemName": name,
+              "cost": cost/split,
+              "receiptId": receiptId
+            };
+    for (i = 0; i < split; i++) {
     $.ajax({
-      type: "POST",
-      url: "http://localhost:4567/receipts/" + receiptId + "/items/new",
-      data: JSON.stringify(item),
-      dataType: "json",
-      success: function(){alert("added")},
-      failure: function(errMsg) {
-        console.log("Error adding receipt: " + errMsg);
-      }
-    });
-    getAllItems();
+          type: "POST",
+          url: "http://localhost:4567/receipts/" + receiptId + "/items/new",
+          data: JSON.stringify(item),
+          dataType: "json",
+          success: function(){},
+          failure: function(errMsg) {
+            console.log("Error adding receipt: " + errMsg);
+          }
+        });
+        getAllItems();
+    }
+
     $("#addItem")[0].reset();
   });
 

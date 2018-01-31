@@ -1,5 +1,6 @@
 package dao;
 
+import models.Item;
 import models.Receipt;
 import org.junit.After;
 import org.junit.Before;
@@ -14,6 +15,7 @@ import static org.junit.Assert.*;
 
 public class Sql2oReceiptDaoTest {
     private Sql2oReceiptDao receiptDao;
+    private Sql2oItemDao itemDao;
     private Connection conn;
 
     @Before
@@ -21,6 +23,7 @@ public class Sql2oReceiptDaoTest {
         String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
         Sql2o sql2o = new Sql2o(connectionString, "", "");
         receiptDao = new Sql2oReceiptDao(sql2o);
+        itemDao = new Sql2oItemDao(sql2o);
 
         conn = sql2o.open();
     }
@@ -85,5 +88,14 @@ public class Sql2oReceiptDaoTest {
 
     public Receipt setupNewReceipt() {
         return new Receipt("PizzaPizza");
+    }
+    public Item setupNewItem() {
+
+        return new Item("fries", 10, 2, 1);
+    }
+
+    public Item setupNewItem2() {
+
+        return new Item("drink", 5, 1, 1);
     }
 }
