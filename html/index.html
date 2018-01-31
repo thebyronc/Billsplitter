@@ -8,10 +8,8 @@
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/script.js"></script>
     <script src="js/frontend.js"></script>
-
   </head>
      <body>
-
        <div class="container-fluid">
          <ul class="nav nav-pills">
            <li role="presentation"><a href="index.html">Home</a></li>
@@ -19,41 +17,30 @@
            <li role="presentation"><a href="#">Add Users</a></li>
          </ul>
 
-
-         <div class="row">
+         <div class="row rowPadding">
            <div class="col-md-6">
-             <form class="input_fields_wrap">
-               <button class="add_field_button">Add More Fields</button></form></br>
-               <div>
-                 <form id = "addUser">
-                <h3>Name:</h3>
-                <input type="text" class="form-control input-md" name="name" id="name">
-                <h3>Email:</h3>
-                <input type="text" class = "form-control input-md" name="email" id="email">
-                <button type="submit">Submit</button>
-                 </form>
-               </div>
-             </form>
+               <h3>ADD USER</h3>
+               <form id ="addUser">
+                   <div>
+                       <h3>Name:</h3>
+                       <input type="text" class="form-control input-md" name="name" id="name">
+                       <h3>Email:</h3>
+                       <input type="text" class = "form-control input-md" name="email" id="email">
+                       <button class="btn btn-info" type="submit">Add User</button>
+                   </div>
+               </form>
+               <div id="clearUsers">DELETE</div>
            </div> <!-- end col-md-6 -->
            <div class="col-md-6">
+               <h3>ALL USERS</h3>
                <ul class="list-group" id="allUsers">
 
                </ul>
            </div> <!-- end col-md-6 -->
-
-           </div> <!-- end col-md-6 -->
-         </div> <!-- end row -->
-
-
+         </div> <!-- row -->
        </div> <!-- end container -->
-
-
-
-
        <p class="name"></p>
        <p class="id"></p>
        <p id="error"></p>
-
-       <div id="allReceipts"></div>
      </body>
 </html>

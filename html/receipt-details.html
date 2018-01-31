@@ -6,8 +6,11 @@
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
   <link href="css/styles.css" type="text/css" rel="stylesheet">
   <script src="js/jquery-3.3.1.js"></script>
-  <script src="js/script.js"></script>
-  <script src="js/frontend.js"></script>
+  <!-- <script src="js/script.js"></script> -->
+  <script src="js/receiptdetails.js"></script>
+  <!-- <script src="js/frontend.js"></script> -->
+
+
 </head>
 <body>
   <div class="container-fluid">
@@ -18,23 +21,32 @@
     </ul>
 
 
-    <div class="row">
+    <div class="row rowPadding">
       <div class="col-md-6">
-        <h3>ADD RECEIPT</h3>
-        <form id="addReceipt">
+        <h3>ADD ITEM</h3>
+        <p id="test"></p>
+        <form id="addItem" class="form-inline">
 
-          <div>
-            <input type="text" class="form-control input-md" id="name"><br>
-            <button class="btn btn-purple" type="submit">Add Receipt</button>
-          </div>
+            <div class="form-group">
+              <input type="text" class="form-control" id="itemName" placeholder="Receipt Item">
+            </div>
+            <div class="input-group">
+              <div class="input-group-addon">$</div>
+              <input type="number" class="form-control" id="itemCost" placeholder="Amount 00.00">
+            </div>
+            <div class="form-group" >
+              <input type="number" class="form-control" id="itemSplit" placeholder="Split" value="1">
+            </div>
+            <button class="btn btn-purple" type="submit">Add</button>
 
         </form>
-      </div> <!-- end col-md-6 -->
-      <div class="col-md-6">
-        <h3>ALL RECEIPTS</h3>
-        <ul class="list-group" id="allReceipts">
+        <h3>ALL ITEMS</h3>
+        <ul class="list-group" id="allItems">
 
         </ul>
+      </div> <!-- end col-md-6 -->
+      <div class="col-md-6">
+
       </div> <!-- end col-md-6 -->
     </div> <!-- end row -->
 
@@ -50,6 +62,14 @@
 <p class="name"></p>
 <p class="id"></p>
 <p id="error"></p>
+<script type="text/javascript">
+    var dataFromParent;
+    function init() {
+      document.write(dataFromParent);
+  }
+      $("#test").append("<p>Test: "+dataFromParent+"</p>");
+      $("#test").append("localStorageID: " + localStorage.getItem("receiptId"));
 
+</script>
 </body>
 </html>
