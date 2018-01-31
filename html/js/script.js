@@ -68,4 +68,25 @@ $(document).ready(function() {
     $("#addReceipt")[0].reset();
   });
 
+  $("#addItem").submit(function(event) {
+    event.preventDefault();
+    var name = $("#name").val();
+    var cost = $("#cost").val();
+    var split = $("#split").val();
+    var item = {
+      "itemName": name,
+      "cost": cost
+      "split": split
+    };
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:4567/receipts/:receiptId/items/new",
+      data: JSON.stringify(receipt),
+      dataType: "json",
+      success: function(){},
+      failure: function(errMsg) {
+        console.log("Error adding item: " + errMsg);
+      }
+    });
+  });
 });

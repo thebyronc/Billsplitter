@@ -30,6 +30,10 @@ public class App extends RuntimeException {
         conn = sql2o.open();
 
 
+//        FilterHolder filterHolder = new FilterHolder(CrossOriginFilter.class);
+//        filterHolder.setInitParameter("allowedOrigins", "*");
+//        filterHolder.setInitParameter("allowedMethods", "GET, POST");
+
         //DELETE
 
         post("/users/deleteAll","application/json", (request, response) -> {
@@ -51,6 +55,7 @@ public class App extends RuntimeException {
             return gson.toJson(receipt);
         });
 
+
         post("/receipts/:receiptId/items/new","application/json", (req, res) -> { //show form to create new item
             Item item = gson.fromJson(req.body(), Item.class);
             itemDao.add(item);
@@ -70,7 +75,7 @@ public class App extends RuntimeException {
             return gson.toJson(receiptDao.getAll());
         });
 
-        get("/receipts/:receiptId/items","application/json", (req, res) -> { //show all items by receipt
+        get("/items","application/json", (req, res) -> { //show all items by receipt
             int receiptId = Integer.parseInt(req.params("receiptId"));
             return gson.toJson(itemDao.findItemsByReceiptId(receiptId));
         });
@@ -105,10 +110,9 @@ public class App extends RuntimeException {
             String itemName = editItem.getItemName();
             double cost = editItem.getCost();
             int split = editItem.getSplit();
-            int idOfReceipt = Integer.parseInt(req.params("receiptId"));
 //            int userId = editItem.getUserId();
-//            int userId = 1;
-            itemDao.update(idOfItemToEdit, itemName, cost, split,idOfReceipt);
+            int userId = 1;
+            itemDao.update(idOfItemToEdit, itemName, cost, split, userId);
             return gson.toJson(editItem);
         });
 
@@ -124,10 +128,12 @@ public class App extends RuntimeException {
         });
 
         //FILTERS
-        before((req, res) -> {
-            res.header("Access-Control-Allow-Origin", "*");
-            res.type("application/json");
-        });
+//        before((req, res) -> {
+//            res.header("Access-Control-Allow-Origin", "*");
+//            res.header("Access-Control-Request-Method", "GET, POST");
+//            // Note: this may or may not be necessary in your particular application
+//            res.type("application/json");
+//        });
         after((req, res) -> {
 //            res.header("Access-Control-Allow-Headers", headers);
             res.type("application/json");
@@ -151,7 +157,12 @@ public class App extends RuntimeException {
             return "OK";
         });
 
+        before((request, response) -> {
+            response.header("Access-Control-Allow-Origin", origin);
+            response.header("Access-Control-Request-Method", methods);
+            response.header("Access-Control-Allow-Headers", headers);
+            // Note: this may or may not be necessary in your particular application
+            response.type("application/json");
+        });
     }
-
-
 }

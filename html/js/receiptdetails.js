@@ -9,7 +9,13 @@ var getAllItems = function() {
     },
     success: function(response) {
       for (i = 0 ; i < response.length; i++ ){
-          $('#allItems').prepend(`<li class="list-group-item"> <span class="receiptItem">Item:</span> ${response[i].itemName} <span class="receiptItem">Cost:</span> ${response[i].cost} | <span class="receiptItem">Assigned To:</span> ${response[i].userId}</li>`);
+          $('#allItems').prepend(`
+            <li class="list-group-item">
+            <span class="receiptItem">ITEM:</span> ${response[i].itemName}
+            <span class="receiptItem">COST:</span> ${response[i].cost}
+            <span class="receiptItem">| ASSIGNED TO:</span> ${response[i].userId}
+            </li>
+            `);
       }
     },
     error: function() {
