@@ -8,7 +8,10 @@ var getAllUsers = function() {
         },
         success: function(response) {
             for(i = 0; i < response.length; i++ ){
+
                 $('#allUsers').prepend(`<li class="list-group-item"><span class="userName">USER:</span> ${response[i].name} <br> <span class="userName">EMAIL:</span> ${response[i].email} <br><span class="userName">ID:</span> ${response[i].id} Test: <a href="userdetail.html" onclick="viewUserById(${response[i].id})"> View Receipt by id</a> </li>`);
+
+
             }
         },
         error: function(){
@@ -25,17 +28,8 @@ var clearAll = function() {
         data: {
             format: 'json'
         },
-        success: function(response) {
-        for (i = 0; i < response.length; i++){
-            $('#allUsers').prepend(`<li class="list-group-item"><span class="userName">USER:</span>
-            ${response[i].name}<br> <span class="userName">EMAIL:</span> ${response[i].email} <br><span class="userName">ID:</span> ${response[i].id} </li>`);
-        }
-        },
-        error: function(){
-        $('#errors').text("There was an error processing your request.Please try again.")}
     });
 }
-
 
 $(document).ready(function() {
     getAllUsers();
@@ -53,19 +47,12 @@ $(document).ready(function() {
         url: "http://localhost:4567/users/new",
         data: JSON.stringify(person),
         dataType: "json",
-        success: function(){},
-        failure: function(errMsg){
-            console.log("Error adding User: " + errMsg);
-        }
-     });
-     getAllUsers();
+        });
+        getAllUsers();
     });
 
-
-
-
-
     clearAll();
+
     $("#clearUsers").click(function(event) {
     event.preventDefault();
     $.ajax({
@@ -80,14 +67,12 @@ $(document).ready(function() {
     });
     clearAll();
     })
-
-
-    });
-
+});
 
 
 
-    }
+
+
 
 
 
