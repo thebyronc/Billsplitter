@@ -1,5 +1,5 @@
 var getAllItems = function() {
-  $('#allReceipts').html('');
+  $('#allItems').html('');
   var receiptId = localStorage.getItem("receiptId");
   $.ajax({
     url: "http://localhost:4567/receipts/" + receiptId + "/items",
@@ -25,6 +25,7 @@ var getAllItems = function() {
       alert("Get all item Error");
     }
   });
+
 }
 
 $(document).ready(function() {
