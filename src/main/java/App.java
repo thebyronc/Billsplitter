@@ -75,7 +75,7 @@ public class App extends RuntimeException {
             return gson.toJson(receiptDao.getAll());
         });
 
-        get("/items","application/json", (req, res) -> { //show all items by receipt
+        get("/receipts/:receiptId/items","application/json", (req, res) -> { //show all items by receipt
             int receiptId = Integer.parseInt(req.params("receiptId"));
             return gson.toJson(itemDao.findItemsByReceiptId(receiptId));
         });
