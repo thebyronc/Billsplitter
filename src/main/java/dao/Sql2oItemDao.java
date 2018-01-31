@@ -99,14 +99,14 @@ public class Sql2oItemDao implements ItemDao {
 
     @Override
 
-    public void update(int id, String itemName, double cost, int receiptId) {
-        String sql = "UPDATE items SET (itemName, cost, tip, receiptId) = (:itemName, :cost, :tip, :receiptId) WHERE id=:id";
+    public void update(int id, String itemName, double cost, int userId) {
+        String sql = "UPDATE items SET (itemName, cost, tip, userId) = (:itemName, :cost, :tip, :userId) WHERE id=:id";
 
         try (Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("itemName", itemName)
                     .addParameter("cost", cost)
-                    .addParameter("receiptId", receiptId)
+                    .addParameter("userId", userId)
                     .addParameter("id", id)
                     .executeUpdate();
         } catch (Sql2oException ex) {

@@ -12,8 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import static spark.Spark.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
+
 
 public class App extends RuntimeException {
     public static void main(String[] args) {
@@ -80,7 +79,7 @@ public class App extends RuntimeException {
             return gson.toJson(receiptDao.getAll());
         });
 
-        get("/items","application/json", (req, res) -> { //show all items by receipt
+        get("/receipts/:receiptId/items","application/json", (req, res) -> { //show all items by receipt
             int receiptId = Integer.parseInt(req.params("receiptId"));
             return gson.toJson(itemDao.findItemsByReceiptId(receiptId));
         });
@@ -114,10 +113,8 @@ public class App extends RuntimeException {
             int idOfItemToEdit = Integer.parseInt(req.params("id"));
             String itemName = editItem.getItemName();
             double cost = editItem.getCost();
-            int split = editItem.getSplit();
-//            int userId = editItem.getUserId();
-//            int userId = 1;
-            itemDao.update(idOfItemToEdit, itemName, cost, idOfReceipt);
+            int userId = editItem.getUserId();
+            itemDao.update(idOfItemToEdit, itemName, cost, userId);
             return gson.toJson(editItem);
         });
 

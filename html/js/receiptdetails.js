@@ -20,7 +20,6 @@ var getAllItems = function() {
             </li>
             `);
       }
-
     },
     error: function() {
       alert("Get all item Error");
@@ -88,7 +87,9 @@ $(document).ready(function() {
         url: "http://localhost:4567/receipts/" + receiptId + "/items/new",
         data: JSON.stringify(item),
         dataType: "json",
-        success: function(){},
+        success: function(){
+          console.log("Success adding: " + item);
+        },
         failure: function(errMsg) {
           console.log("Error adding receipt: " + errMsg);
         }
