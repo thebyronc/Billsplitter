@@ -116,8 +116,8 @@ public class App extends RuntimeException {
             double cost = editItem.getCost();
             int split = editItem.getSplit();
 //            int userId = editItem.getUserId();
-            int userId = 1;
-            itemDao.update(idOfItemToEdit, itemName, cost, split, userId);
+//            int userId = 1;
+            itemDao.update(idOfItemToEdit, itemName, cost, idOfReceipt);
             return gson.toJson(editItem);
         });
 

@@ -3,6 +3,7 @@ package models;
 public class Item {
     private String itemName;
     private double cost;
+    private double tip;
     private int receiptId;
     private int userId;
     private int id;
@@ -11,6 +12,7 @@ public class Item {
     public Item(String itemName, double cost, int split, int receiptId) {
         this.itemName = itemName;
         this.cost = cost;
+        this.tip = 0;
         this.split = split;
         this.receiptId = receiptId;
 
@@ -28,6 +30,10 @@ public class Item {
     }
     public double getCost() {
         return this.cost;
+    }
+
+    public double getTip(){
+        return 0.15 * cost;
     }
 
     public void setReceiptId(int id) {
