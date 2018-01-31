@@ -10,6 +10,7 @@ public interface ItemDao {
     Item findById(int id);
     void addItemToUser(Item item, User user);
     List<Item> getAll();
+    List<User> getAllUsersForAItem(int itemId);
 
     List<Item> findItemsByReceiptId(int id);
     List<Item> findItemsByUserId(int userId);
@@ -17,5 +18,5 @@ public interface ItemDao {
 
     void deleteById(int id);
 
-    void splitItemById(int id, double cost, double getSplit);
+    void splitItemById(int id, double cost, int getSplit);
 }

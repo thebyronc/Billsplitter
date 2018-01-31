@@ -16,10 +16,11 @@ public class Sql2oItemDao implements ItemDao {
         this.sql2o = sql2o;
     }
 
+
     @Override
     public void add(Item item) {
         String sql = "INSERT INTO items (itemName, cost, split, receiptId) VALUES (:itemName, :cost, :split, :receiptId)";
-        try(Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql, true)
                     .bind(item)
                     .executeUpdate()
@@ -31,50 +32,52 @@ public class Sql2oItemDao implements ItemDao {
     }
 
     @Override
-    public void addItemToUser(Item item, User user){
+    public void addItemToUser(Item item, User user) {
         String sql = "INSERT INTO itemid_userid (itemId, userId) VALUES (:itemId, :userId)";
         try (Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("itemId", item.getId())
                     .addParameter("userId", user.getId())
                     .executeUpdate();
-        } catch (Sql2oException ex){
+        } catch (Sql2oException ex) {
             System.out.println(ex);
         }
     }
 
     @Override
     public Item findById(int id) {
-        try(Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM items WHERE id=:id")
                     .addParameter("id", id)
                     .executeAndFetchFirst(Item.class);
         }
     }
+
     @Override
     public List<Item> findItemsByReceiptId(int id) {
-        try(Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM items WHERE receiptId=:receiptId")
                     .addParameter("receiptId", id)
                     .executeAndFetch(Item.class);
         }
     }
+
     @Override
     public List<Item> findItemsByUserId(int userId) {
         ArrayList<Item> items = new ArrayList<>();
 
         String joinQuery = "SELECT itemId FROM itemid_userid WHERE userId=:userId";
 
-        try(Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             List<Integer> allItemsIds = con.createQuery(joinQuery)
                     .addParameter("userId", userId)
                     .executeAndFetch(Integer.class);
-            for (Integer itemId : allItemsIds){
+            for (Integer itemId : allItemsIds) {
                 String ItemQuery = "SELECT * FROM items WHERE id = :itemId";
                 items.add(
                         con.createQuery(ItemQuery)
-                            .addParameter("itemId", itemId)
-                            .executeAndFetchFirst(Item.class));
+                                .addParameter("itemId", itemId)
+                                .executeAndFetchFirst(Item.class));
             }
         } catch (Sql2oException ex) {
             System.out.println(ex);
@@ -84,7 +87,7 @@ public class Sql2oItemDao implements ItemDao {
 
     @Override
     public List<Item> getAll() {
-        try(Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM items")
                     .executeAndFetch(Item.class);
         }
@@ -108,9 +111,14 @@ public class Sql2oItemDao implements ItemDao {
 
     @Override
     public void deleteById(int id) {
-        try(Connection con = sql2o.open()){
-            con.createQuery("DELETE FROM items WHERE id=:id")
+        String sql = "DELETE FROM items WHERE id = :id";
+        String deleteJoin = "DELETE FROM itemId_UserId WHERE itemId = :itemId";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sql)
                     .addParameter("id", id)
+                    .executeUpdate();
+            con.createQuery(deleteJoin)
+                    .addParameter("itemId", id)
                     .executeUpdate();
         } catch (Sql2oException ex) {
             System.out.println(ex);
@@ -118,7 +126,30 @@ public class Sql2oItemDao implements ItemDao {
     }
 
     @Override
-    public void splitItemById(int id, double cost, double split) {
+    public List<User> getAllUsersForAItem(int itemId) {
+        ArrayList<User> users = new ArrayList<>();
+        String getUserIdQuery = "DELETE userId FROM itemId_UserId WHERE itemId = :itemId";
+        try (Connection con = sql2o.open()) {
+            List<Integer> allUsersId = con.createQuery(getUserIdQuery)
+                    .addParameter("itemId", itemId)
+                    .executeAndFetch(Integer.class);
+
+            for (Integer userId : allUsersId) {
+                String sql = "SELECT * FROM users WHERE id = :userId";
+                users.add(con.createQuery(sql)
+                        .addParameter("userId", userId)
+                        .executeAndFetchFirst(User.class));
+            }
+        }catch (Sql2oException ex) {
+              System.out.println(ex);
+        }
+        return users;
+    }
+
+
+
+    @Override
+    public void splitItemById(int id, double cost, int split) {
         try(Connection con = sql2o.open()){
             con.createQuery("UPDATE items SET cost = (:cost / :split) WHERE id = :id")
                     .addParameter("id", id)

@@ -23,10 +23,11 @@
   color: #000000;
 }
 
-.list-group li:first-child {
-  font-weight: bolder;
-}
 .receiptItem {
   font-size: 10px;
   color: #CCCCCC;
+}
+
+#allReceipts li:first-child {
+  font-weight: bolder;
 }
