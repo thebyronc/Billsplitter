@@ -148,16 +148,16 @@ public class Sql2oItemDao implements ItemDao {
 
 
 
-//    @Override
-//    public void splitItemById(int id, double cost, int split) {
-//        try(Connection con = sql2o.open()){
-//            con.createQuery("UPDATE items SET cost = (:cost / :split) WHERE id = :id")
-//                    .addParameter("id", id)
-//                    .addParameter("cost", cost)
-//                    .addParameter("split", split)
-//                    .executeUpdate();
-//        } catch (Sql2oException ex) {
-//            System.out.println(ex);
-//        }
-//    }
+    @Override
+    public void splitItemById(int id, double cost, int split) {
+        try(Connection con = sql2o.open()){
+            con.createQuery("UPDATE items SET cost = (:cost / :split) WHERE id = :id")
+                    .addParameter("id", id)
+                    .addParameter("cost", cost)
+                    .addParameter("split", split)
+                    .executeUpdate();
+        } catch (Sql2oException ex) {
+            System.out.println(ex);
+        }
+    }
 }

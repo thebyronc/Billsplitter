@@ -44,6 +44,38 @@ $(document).ready(function() {
 
 
 
+
+    clearAllUsers();
+    $("#clearUsers").click(function(event) {
+    event.preventDefault();
+    var name = $("#name").val();
+    var email = $("#email").val();
+    var person = {
+    "name" : name,
+    "email" : email
+    };
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:4567/users/deleteAll",
+        data: JSON.stringify(person),
+        dataType: "json",
+        success: function(){},
+        failure: function(errMsg){
+            console.log("Error adding User:" + errMsg);
+        }
+    });
+    clearAllUsers();
+    }
+
+
+    }
+
+
+
+
+
+
+
  });
 
 

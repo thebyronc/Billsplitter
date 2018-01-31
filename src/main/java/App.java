@@ -9,6 +9,7 @@ import models.User;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import static spark.Spark.*;
 import javax.servlet.*;
@@ -30,6 +31,16 @@ public class App extends RuntimeException {
 
 
         //DELETE
+
+        post("/users/deleteAll", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<User> allUsers = userDao.getAll();
+            model.put("users", allUsers);
+            userDao.clearAll();
+            response.status(201);
+            return gson.toJson(allUsers);
+        });
+
 
 
         //CREATE
