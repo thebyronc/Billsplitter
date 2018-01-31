@@ -18,5 +18,5 @@ public interface ItemDao {
 
     void deleteById(int id);
   
-    void splitItemById(int id, double cost, int getSplit);
+//    void splitItemById(int id, double cost, int getSplit);
 }
