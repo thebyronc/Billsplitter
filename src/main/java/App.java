@@ -97,7 +97,7 @@ public class App extends RuntimeException {
             int idOfReceipt = Integer.parseInt(req.params("receiptId"));
 //            int userId = editItem.getUserId();
 //            int userId = 1;
-            itemDao.update(idOfItemToEdit, itemName, cost, split, idOfReceipt);
+            itemDao.update(idOfItemToEdit, itemName, cost, idOfReceipt);
             return gson.toJson(editItem);
         });
 

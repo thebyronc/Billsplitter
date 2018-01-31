@@ -18,7 +18,6 @@ CREATE TABLE IF NOT EXISTS items (
   itemName VARCHAR,
   cost DOUBLE,
   tip DOUBLE,
-  split INTEGER,
   userId INTEGER,
   receiptId INTEGER
 );
