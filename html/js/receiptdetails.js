@@ -59,7 +59,7 @@ $(document).ready(function() {
           for (i = 0 ; i < response.length; i++ ){
              totalCost += response[i].cost;
           }
-          $("#runningTotal").text("$" + totalCost);
+          $("#runningTotal").text("$" + totalCost + "TEST");
         },
         error: function() {
           alert("Get all item Error");
