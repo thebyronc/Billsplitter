@@ -19,10 +19,15 @@ public class Sql2oItemDao implements ItemDao {
 
     @Override
     public void add(Item item) {
-        String sql = "INSERT INTO items (itemName, cost, receiptId) VALUES (:itemName, :cost, :receiptId)";
+
+        String sql = "INSERT INTO items (itemName, cost, tip, receiptId) VALUES (:itemName, :cost, :tip, :receiptId)";
+
         try (Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql, true)
-                    .bind(item)
+                    .addParameter("itemName", item.getItemName())
+                    .addParameter("cost", item.getCost())
+                    .addParameter("tip", item.getTip())
+                    .addParameter("receiptId", item.getReceiptId())
                     .executeUpdate()
                     .getKey();
             item.setId(id);
@@ -30,7 +35,6 @@ public class Sql2oItemDao implements ItemDao {
             System.out.println(ex);
         }
     }
-
     @Override
     public void addItemToUser(Item item, User user) {
         String sql = "INSERT INTO itemid_userid (itemId, userId) VALUES (:itemId, :userId)";
@@ -94,13 +98,15 @@ public class Sql2oItemDao implements ItemDao {
     }
 
     @Override
-    public void update(int id, String itemName, double cost, int split, int receiptId) {
-        String sql = "UPDATE items SET (itemName, cost, receiptId) = (:itemName, :cost, :receiptId) WHERE id=:id";
+
+    public void update(int id, String itemName, double cost, int userId) {
+        String sql = "UPDATE items SET (itemName, cost, tip, userId) = (:itemName, :cost, :tip, :userId) WHERE id=:id";
+
         try (Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("itemName", itemName)
                     .addParameter("cost", cost)
-                    .addParameter("receiptId", receiptId)
+                    .addParameter("userId", userId)
                     .addParameter("id", id)
                     .executeUpdate();
         } catch (Sql2oException ex) {

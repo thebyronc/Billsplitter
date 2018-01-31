@@ -16,7 +16,7 @@ public class Sql2oReceiptDao implements ReceiptDao {
 
     @Override
     public void add(Receipt receipt) {
-        String sql = "INSERT INTO receipts (receiptName, total, cleared) VALUES (:receiptName, :total, :cleared)";
+        String sql = "INSERT INTO receipts (receiptName, cleared) VALUES (:receiptName, :cleared)";
         try(Connection con = sql2o.open()){
             int id = (int) con.createQuery(sql)
                     .bind(receipt)

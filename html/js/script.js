@@ -23,13 +23,29 @@ var viewReceiptById = function(id) {
   var OpenWindow = window.open(`receipt-details.html#${output}`, "_self", '');
   OpenWindow.dataFromParent = output; // dataFromParent is a variable in child.html
   OpenWindow.init();
-
-
 };
+
+var clearAll = function() {
+    $('#allReceipts').html('');
+    $.ajax({
+      url: "http://localhost:4567/receiprs/deleteAll",
+      type: "POST",
+      data: {
+      format: 'json'
+      },
+      success: function(response) {
+        for (i=0 ; i < response.length; i++ ) {
+            $('#allReceipts').prepend(`<li class="list-group-item"><span class="receiptItem">RESTAURANT:</span>${response[i].receiptName}<br><span class="receiptItem">ID:</span> ${response[i].id} Test: <a href="#" onclick="viewReceiptById(${response[i].id})"> View Receipt by id</a> </li>`);
+        }
+      },
+      error: function() {
+        $('#errors').text("There was an error processing your request. Please try again.")
+      }
+    });
+}
 
 $(document).ready(function() {
   getAllReceipts();
-
 
   $('#testClick').click(function() {
     // let restaurantId = $('#restaurantId').val();
@@ -68,25 +84,23 @@ $(document).ready(function() {
     $("#addReceipt")[0].reset();
   });
 
-  $("#addItem").submit(function(event) {
-    event.preventDefault();
-    var name = $("#name").val();
-    var cost = $("#cost").val();
-    var split = $("#split").val();
-    var item = {
-      "itemName": name,
-      "cost": cost
-      "split": split
-    };
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:4567/receipts/:receiptId/items/new",
-      data: JSON.stringify(receipt),
-      dataType: "json",
-      success: function(){},
-      failure: function(errMsg) {
-        console.log("Error adding item: " + errMsg);
-      }
-    });
-  });
+  // $("clearReceipts").click(function(event) {
+  // event.preventDefault();
+  //   $.ajax({
+  //         type: "POST",
+  //         url: "http://localhost:4567/receipts/deleteAll",
+  //         data: JSON.stringify(),
+  //         dataType: "json",
+  //         success: function(){},
+  //         failure: function(errMsg){
+  //             console.log("Error adding receipt" + errMsg);
+  //         }
+  //     });
+  //     clearAll();
+  //     })
+  //
+  //
+  //     });
+  // })
+
 });

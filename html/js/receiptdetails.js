@@ -99,29 +99,33 @@ $(document).ready(function() {
     }
     $("#addItem")[0].reset();
   });
-
   var runningTotal = function() {
-      var receiptId = localStorage.getItem("receiptId");
-      $.ajax({
-        url: "http://localhost:4567/receipts/" + receiptId + "/items",
-        type: 'GET',
-        data: {
-          format: 'json'
-        },
-        success: function(response) {
-          var totalCost = 0;
-          for (i = 0 ; i < response.length; i++ ){
-             totalCost += response[i].cost;
-          }
-          $("#runningTotal").text("$" + totalCost);
-        },
-        error: function() {
-          alert("Get all item Error");
+    event.preventDefault();
+    var receiptId = localStorage.getItem("receiptId");
+    var name = $("#itemName").val();
+    var cost = parseFloat($("#itemCost").val());
+    var split = parseInt($("#itemSplit").val());
+    var total =0;
+    var item = {
+      "itemName": name,
+      "cost": cost/split,
+      "receiptId": receiptId
+                };
+    for (i = 0; i < item.length; i++) {
+        cost += total;
+    $.ajax({
+              type: "POST",
+              url: "http://localhost:4567/receipts/" + receiptId + "/items/new",
+              data: JSON.stringify(item),
+              dataType: "json",
+              success: function(){},
+              failure: function(errMsg) {
+                console.log("Error adding receipt: " + errMsg);
+              }
+            });
         }
-      });
+        document.getElementById("runningTotal").innerHTML(runningTotal);
     }
   getAllItems();
   getAllUsers();
-  runningTotal();
-
 });
