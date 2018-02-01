@@ -67,9 +67,10 @@ $(document).ready(function() {
       }
     });
   });
-
-  $("#addReceipt").submit(function(event) {
+ $("#addReceipt").submit(function(event) {
     event.preventDefault();
+    let zip = $('#zip').val();
+    $('#zip').val("");
     var name = $("#name").val();
     var receipt = {
       "receiptName": name
@@ -80,9 +81,41 @@ $(document).ready(function() {
       data: JSON.stringify(receipt),
       dataType: "json"
     });
+    $.ajax({
+    url: "https://rest.avatax.com/api/v2/taxrates/byaddress?postalCode=" + zip + "&country=US",
+    type: 'GET',
+    dataType: 'json',
+    beforeSend: function (xhr) {
+            xhr.setRequestHeader ("Authorization", "Basic IDIwMDAwNjA0MzE6MTA5M0VEQkE0OTI3RTgxNQ==");
+        },
+    success: function(response) {
+      $('#showSalesTax').text(`Sales Tax Is ${response.totalRate}`);
+    },
+    error: function() {
+      $('#errors').text("There was an error processing your request. Please try again.")
+    }
+    });
+
     getAllReceipts();
     $("#addReceipt")[0].reset();
   });
+//    $('#zipCode').click(function() {
+//      let zip = $('#zipcode').val();
+//      $('#zipcode').val("");
+//      $.ajax({
+//        url: `https://rest.avatax.com/api/v2/taxrates/byaddress?postalCode=${zip}`,
+//        type: 'GET',
+//        data: {
+//          format: 'json'
+//        },
+//        success: function(response) {
+//          $('.showSalesTax').text(`The humidity in ${city} is ${response.totalRate}`);
+//        },
+//        error: function() {
+//          $('#errors').text("There was an error processing your request. Please try again.")
+//        }
+//      });
+//    });
 
   // $("clearReceipts").click(function(event) {
   // event.preventDefault();
