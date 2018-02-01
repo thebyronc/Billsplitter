@@ -50,14 +50,15 @@ $(document).ready(function() {
         },
     success: function(response) {
       $('#showSalesTax').text(`Sales Tax Is ${response.totalRate}`);
+      getAllReceipts();
     },
     error: function() {
       $('#errors').text("There was an error processing your request. Please try again.")
     }
     });
 
-    getAllReceipts();
     $("#addReceipt")[0].reset();
+
   });
 
   var getAllReceipts = function() {
