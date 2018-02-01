@@ -9,7 +9,7 @@ public interface ReceiptDao {
   void add(Receipt receipt);
   Receipt findById(int id);
   List<Receipt> getAll();
-  void update(int id, String receiptName, Boolean cleared);
+  void update(int id, String receiptName, String salestax, Boolean cleared);
   void deleteById(int id);
   void clearAll();
 }

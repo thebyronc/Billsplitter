@@ -5,11 +5,13 @@ import java.util.ArrayList;
 public class Receipt {
   private String receiptName;
   private double total;
+  private String salestax;
   private Boolean cleared;
   private int id;
 
-  public Receipt (String receiptName) {
+  public Receipt (String receiptName, String salestax) {
     this.receiptName = receiptName;
+    this.salestax = salestax;
     this.cleared = false;
   }
 
@@ -42,4 +44,11 @@ public class Receipt {
     return this.id;
   }
 
+  public String getSalestax() {
+    return salestax;
+  }
+
+  public void setSalestax(String salestax) {
+    this.salestax = salestax;
+  }
 }

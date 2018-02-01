@@ -18,38 +18,42 @@ $(document).ready(function() {
     });
   }
 
-  $("#addItem").submit(function(event) {
-      event.preventDefault();
-      var receiptId = localStorage.getItem("receiptId");
-      var name = $("#itemName").val();
-      var cost = parseFloat($("#itemCost").val());
-      var split = parseInt($("#itemSplit").val());
-      var userId = parseInt($("#userOptions").val());
-      var item = {
-        "itemName": name,
-        "cost": cost/split,
-        "userId": userId,
-        "receiptId": receiptId
-      };
-      for (i = 0; i < split; i++) {
-        $.ajax({
-          type: "POST",
-          url: "http://localhost:4567/receipts/" + receiptId + "/items/new",
-          data: JSON.stringify(item),
-          dataType: "json",
-          success: function(){
-            console.log("Success adding: " + item);
-          },
-          failure: function(errMsg) {
-            console.log("Error adding receipt: " + errMsg);
-          }
-        });
-        getAllItems();
-        runningTotal();
-        calculateItemCostByUser();
-      }
-      $("#addItem")[0].reset();
-    });
+ $("#addItem").submit(function(event) {
+     event.preventDefault();
+     var tax = localStorage.getItem("salestax");
+     var floatTax = parseFloat(tax);
+     var receiptId = localStorage.getItem("receiptId");
+     var name = $("#itemName").val();
+     var cost = parseFloat($("#itemCost").val());
+     var split = 1;
+     var userId = parseInt($("#userOptions").val());
+     var item = {
+       "itemName": name,
+       "cost": cost * (1+floatTax),
+       "userId": userId,
+       "receiptId": receiptId
+     };
+     for (i = 0; i < split; i++) {
+       $.ajax({
+         type: "POST",
+         url: "http://localhost:4567/receipts/" + receiptId + "/items/new",
+         data: JSON.stringify(item),
+         dataType: "json",
+         success: function(){
+           console.log("Success adding: " + item);
+         },
+         failure: function(errMsg) {
+           console.log("Error adding receipt: " + errMsg);
+         }
+       });
+
+       runningTotal();
+       calculateItemCostByUser();
+     }
+     getAllItems();
+     $("#addItem")[0].reset();
+   });
+
 
   var runningTotal = function() {
       var receiptId = localStorage.getItem("receiptId");

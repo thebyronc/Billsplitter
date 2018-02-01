@@ -27,39 +27,41 @@ var clearAll = function() {
 
 $(document).ready(function() {
 
- $("#addReceipt").submit(function(event) {
-    event.preventDefault();
-    let zip = $('#zip').val();
-    $('#zip').val("");
-    var name = $("#name").val();
-    var receipt = {
-      "receiptName": name
-    };
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:4567/receipts/new",
-      data: JSON.stringify(receipt),
-      dataType: "json"
-    });
-    $.ajax({
-    url: "https://rest.avatax.com/api/v2/taxrates/byaddress?postalCode=" + zip + "&country=US",
-    type: 'GET',
-    dataType: 'json',
-    beforeSend: function (xhr) {
-            xhr.setRequestHeader ("Authorization", "Basic IDIwMDAwNjA0MzE6MTA5M0VEQkE0OTI3RTgxNQ==");
-        },
-    success: function(response) {
-      $('#showSalesTax').text(`Sales Tax Is ${response.totalRate}`);
-    },
-    error: function() {
-      $('#errors').text("There was an error processing your request. Please try again.")
-    }
-    });
+$("#addReceipt").submit(function(event) {
+   event.preventDefault();
+   var name = $("#name").val();
+   let zip = $('#zip').val();
+ $('#zip').val("");
+   $.ajax({
+       url: "https://rest.avatax.com/api/v2/taxrates/byaddress?postalCode=" + zip + "&country=US",
+       type: 'GET',
+       dataType: 'json',
+       beforeSend: function (xhr) {
+               xhr.setRequestHeader ("Authorization", "Basic IDIwMDAwNjA0MzE6MTA5M0VEQkE0OTI3RTgxNQ==");
+           },
+       success: function(response) {
+         $('#showSalesTax').text(`Sales tax is ${response.totalRate}`);
+                 var tax = response.totalRate;
+                   localStorage.setItem("salestax", tax);
+                 var receipt = {
+                   "receiptName": name,
+                   "salestax" : tax
+                 };
+              debugger;
+             $.ajax({
+               type: "POST",
+               url: "http://localhost:4567/receipts/new",
+               data: JSON.stringify(receipt),
+               dataType: "json"
+             });
+       },
+       error: function() {
+         $('#errors').text("There was an error processing your request. Please try again.")
+       }
+       });
 
-    getAllReceipts();
     $("#addReceipt")[0].reset();
   });
-
   var getAllReceipts = function() {
     $('#allReceipts').html('');
     $.ajax({
