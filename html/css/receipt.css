@@ -3,7 +3,9 @@ body {
   color: #F2F2F2;
   /* #4AD99 #F5A503 #F2385A */
 }
-
+h3 {
+  color: #757AD1;
+}
 .w3-card-4 {
   margin: 0 15px 15px 0;
   width: 300px;
@@ -25,7 +27,6 @@ body {
 .w3-hover-border-purple:hover {
   border-bottom: 6px solid #757AD1!important;
 }
-
 .w3-hover-text-purple:hover {
   color: #757AD1!important;
   text-decoration: none;
@@ -37,4 +38,16 @@ body {
 .w3-hover-text-orange:hover {
   color: #F5A503!important;
   text-decoration: none;
+}
+
+.w3-dark-grey {
+ color: #F2385A!important;
+ background-color: #D9D9D9!important;
+}
+.w3-dark-grey:hover {
+ color: #F2385A!important;
+}
+.info-bg {
+  background-color: #F2F2F2;
+  color: #000;
 }
