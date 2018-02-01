@@ -5,7 +5,9 @@ var viewReceiptById = function(id) {
   OpenWindow.dataFromParent = output; // dataFromParent is a variable in child.html
   OpenWindow.init();
 };
-
+function goBack() {
+    window.history.back();
+}
 var clearAll = function() {
     $('#allReceipts').html('');
     $.ajax({
@@ -61,6 +63,7 @@ $("#addReceipt").submit(function(event) {
        });
 
     $("#addReceipt")[0].reset();
+
   });
   var getAllReceipts = function() {
     $('#allReceipts').html('');
@@ -72,7 +75,17 @@ $("#addReceipt").submit(function(event) {
       },
       success: function(response) {
         for (i = 0 ; i < response.length; i++ ){
-            $('#allReceipts').prepend(`<li class="list-group-item"><span class="receiptItem">RESTAURANT:</span> ${response[i].receiptName} <br> <span class="receiptItem">ID:</span> ${response[i].id} Test: <a href="#" onclick="viewReceiptById(${response[i].id})"> View Receipt by id</a> </li>`);
+            $('#allReceipts').prepend(`
+              <div class="w3-card-4">
+              <header class="w3-container w3-light-grey">
+                <h3>${response[i].receiptName}</h3>
+              </header>
+              <div class="w3-container">
+                <p><span class="receiptItem">ID: </span> ${response[i].id}</p>
+              </div>
+              <button class="w3-button w3-block w3-dark-grey" href="#" onclick="viewReceiptById(${response[i].id})">+ View Details</button>
+              </div>
+            `);
         }
       },
       error: function() {

@@ -18,6 +18,7 @@ $(document).ready(function() {
     });
   }
 
+
  $("#addItem").submit(function(event) {
      event.preventDefault();
      var tax = localStorage.getItem("salestax");
@@ -53,8 +54,7 @@ $(document).ready(function() {
      getAllItems();
      $("#addItem")[0].reset();
    });
-
-
+  
   var runningTotal = function() {
       var receiptId = localStorage.getItem("receiptId");
       $.ajax({
@@ -178,9 +178,12 @@ $(document).ready(function() {
       success: function(response) {
 
         var costPerUser = [];
+        for(userIndex = 0;userIndex<getUserId.length; userIndex++){
+          costPerUser[userIndex] = 0;
+        }
         for(i = 0; i < response.length; i++){
           for(userIndex = 0; userIndex < getUserId.length; userIndex++){
-            costPerUser[i] = 0;
+
             if(`${response[i].userId}` ===  getUserId[userIndex]) {
               var itemCost = `${response[i].cost}`;
               costPerUser[userIndex] += parseInt(itemCost);
