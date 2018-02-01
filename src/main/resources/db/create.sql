@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS receipts (
   id int PRIMARY KEY auto_increment,
   receiptName VARCHAR,
+  salestax VARCHAR,
   total INTEGER,
   cleared BOOLEAN
 );
