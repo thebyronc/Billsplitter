@@ -69,6 +69,26 @@ $(document).ready(function() {
      getAllUsers();
     });
 
+//    var getUserById = function() {
+//    $.ajax({
+//        url: "http://localhost:4567/users",
+//        type: 'GET',
+//        data: {
+//            format: 'json'
+//        },
+//        success: function(response) {
+//        response.forEach(function(user){
+//        $(`#user${user.id}`).text(`${user.name}`);
+//        });
+//        },
+//        error:function() {
+//        console.log("Get all user Error");
+//        }
+//    });
+//    }
+//    getAllUsers();
+//    });
+
 
 
 
