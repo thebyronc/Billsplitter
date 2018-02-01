@@ -59,7 +59,7 @@ $(document).ready(function() {
                 },
                 success: function(response) {
                     for (i = 0 ; i < response.length; i++ ){
-                        $('#allUsers').prepend(`<li class="list-group-item"><span class="userName">USER:</span> ${response[i].name} <br> <span class="userName">EMAIL:</span> ${response[i].email} <br><span class="userName">ID:</span> ${response[i].id} More details: <a href="#" onclick="viewUserById(${response[i].id})"> View User by id</a></span></li>`);
+                        $('#allUsers').prepend(`<li class="list-group-item"><span class="userName">USER:</span> ${response[i].name} <br> <span class="userName">EMAIL:</span> ${response[i].email} <br><span class="userName">ID:</span> ${response[i].id} <br> More details: <a href="#" onclick="viewUserById(${response[i].id})"> View User by id</a></span></li>`);
                     }
                 },
                 error: function(){
