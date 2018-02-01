@@ -44,10 +44,11 @@ $(document).ready(function() {
             console.log("Error adding receipt: " + errMsg);
           }
         });
-        getAllItems();
+
         runningTotal();
         calculateItemCostByUser();
       }
+      getAllItems();
       $("#addItem")[0].reset();
     });
 
@@ -174,9 +175,12 @@ $(document).ready(function() {
       success: function(response) {
 
         var costPerUser = [];
+        for(userIndex = 0;userIndex<getUserId.length; userIndex++){
+          costPerUser[userIndex] = 0;
+        }
         for(i = 0; i < response.length; i++){
           for(userIndex = 0; userIndex < getUserId.length; userIndex++){
-            costPerUser[i] = 0;
+
             if(`${response[i].userId}` ===  getUserId[userIndex]) {
               var itemCost = `${response[i].cost}`;
               costPerUser[userIndex] += parseInt(itemCost);
