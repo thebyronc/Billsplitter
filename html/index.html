@@ -6,47 +6,45 @@
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="css/styles.css" type="text/css" rel="stylesheet">
-    <link href="css/receipt.css" type="text/css" rel="stylesheet">
+
+    <link href="css/users.css" type="text/css" rel="stylesheet">
+
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/script.js"></script>
     <script src="js/frontend.js"></script>
 </head>
 <body>
-<div class="container-fluid">
-    <!-- <ul class="nav nav-pills">
-      <li role="presentation"><a href="index.html">Home</a></li>
-      <li role="presentation"><a href="receipt.html">Receipts</a></li>
-      <li role="presentation"><a href="index.html">Users</a></li>
-    </ul> -->
-    <div class="w3-bar">
-        <a href="#" onclick="goBack()" class="w3-bar-item w3-button w3-hover-none w3-bottombar w3-hover-border-orange w3-hover-text-orange"><< BACK</a>
-        <a href="receipt.html" class="w3-bar-item w3-button w3-hover-none w3-bottombar w3-hover-border-purple w3-hover-text-purple">RECEIPTS</a>
-        <a href="index.html" class="w3-bar-item w3-button w3-hover-none w3-bottombar w3-hover-border-blue w3-hover-text-blue">USERS</a>
+
+<div class="container">
+  <div class="container-fluid">
+  <div class="w3-bar">
+    <a href="#" onclick="goBack()" class="w3-bar-item w3-button w3-hover-none w3-bottombar w3-hover-border-orange w3-hover-text-orange"><< BACK</a>
+    <a href="receipt.html" class="w3-bar-item w3-button w3-hover-none w3-bottombar w3-hover-border-purple w3-hover-text-purple">RECEIPTS</a>
+    <a href="index.html" class="w3-bar-item w3-button w3-hover-none w3-bottombar w3-hover-border-blue w3-hover-text-blue">USERS</a>
+  </div>
+    <div class="starter-template">
+        <div class="row rowPadding">
+            <div class="col-md-6">
+                <h3>ADD USER</h3>
+                <form id ="addUser">
+                    <div>
+                        <h3>Name:</h3>
+                        <input type="text" class="form-control input-md" name="name" id="name">
+                        <h3>Email:</h3>
+                        <input type="text" class = "form-control input-md" name="email" id="email">
+                        <button class="btn btn-purple" type="submit">Add User</button>
+                    </div>
+                </form>
+                <!-- <input id ="clearUsers" type="button" class="btn btn-purple" value="DELETE ALL"> -->
+            </div> <!-- end col-md-6 -->
+            <div class="col-md-6">
+                <h3>ALL USERS</h3>
+                <ul class="list-group" id="allUsers">
+
 
     </div>
+  </div>
+</div> <!-- end container -->
 
-    <div class="row rowPadding">
-      <div class="col-md-6">
-        <h3>ADD USER</h3>
-        <form id ="addUser">
-            <div>
-              <h3>Name:</h3>
-              <input type="text" class="form-control input-md" name="name" id="name">
-              <h3>Email:</h3>
-            <input type="text" class = "form-control input-md" name="email" id="email">
-            <button class="btn btn-info" type="submit">Add User</button>
-            </div>
-        </form>
-        <input id ="clearUsers" type="button" class="btn btn-warning" value="ALL DELETE">
-      </div> <!-- end col-md-6 -->
-      <div class="col-md-6">
-      <h3>ALL USERS</h3>
-      <ul class="list-group" id="allUsers">
-
-      </ul>
-      </div> <!-- end col-md-6 -->
-    </div> <!-- row -->
-</div>
-<!-- end container -->
 </body>
 </html>
