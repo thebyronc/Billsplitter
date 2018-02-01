@@ -1,6 +1,6 @@
 var viewUserById = function(id) {
   var output = id;
-  localStorage.setItem("userId", id);
+  localStorage.setItem("id", id);
   var OpenWindow = window.open(`userdetail.html#${output}`, "_self", '');
   OpenWindow.dataFromParent = output; // dataFromParent is a variable in child.html
   OpenWindow.init();
@@ -16,6 +16,7 @@ var clearAll = function() {
         },
     });
 }
+
 var deleteUser = function() {
     $('#currentUser').html('');// Need to connect this to table
     $.ajax({
@@ -41,8 +42,9 @@ $(document).ready(function() {
         type: "POST",
         url: "http://localhost:4567/users/new",
         data: JSON.stringify(person),
-        dataType: "json",
+        dataType: "json"
         });
+
        getAllUsers();
        $("#addUser")[0].reset();
     });
@@ -80,7 +82,9 @@ $(document).ready(function() {
     });
     clearAll();
     });
-    });
+    getAllUsers();
+});
+
 
 
 
