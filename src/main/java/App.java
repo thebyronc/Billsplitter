@@ -104,8 +104,9 @@ public class App extends RuntimeException {
             int idOfReceiptToEdit = Integer.parseInt(req.params("id"));
             String receiptName = editReceipt.getReceiptName();
             double total = editReceipt.getTotal();
+            String salestax = editReceipt.getSalestax();
             boolean flag = editReceipt.getCleared();
-            receiptDao.update(idOfReceiptToEdit, receiptName, flag);
+            receiptDao.update(idOfReceiptToEdit, receiptName, salestax, flag);
             return gson.toJson(editReceipt);
         });
 

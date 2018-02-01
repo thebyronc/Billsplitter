@@ -16,7 +16,7 @@ public class Sql2oReceiptDao implements ReceiptDao {
 
     @Override
     public void add(Receipt receipt) {
-        String sql = "INSERT INTO receipts (receiptName, cleared) VALUES (:receiptName, :cleared)";
+        String sql = "INSERT INTO receipts (receiptName, salestax, cleared) VALUES (:receiptName, :salestax, :cleared)";
         try(Connection con = sql2o.open()){
             int id = (int) con.createQuery(sql)
                     .bind(receipt)
@@ -46,11 +46,12 @@ public class Sql2oReceiptDao implements ReceiptDao {
     }
 
     @Override
-    public void update(int id, String receiptName, Boolean cleared) {
-        String sql = "UPDATE receipts SET (receiptName, cleared) = (:receiptName, :cleared) WHERE id=:id";
+    public void update(int id, String receiptName, String salestax, Boolean cleared) {
+        String sql = "UPDATE receipts SET (receiptName, salestax, cleared) = (:receiptName, :salestax, :cleared) WHERE id=:id";
         try (Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("receiptName", receiptName)
+                    .addParameter("salestax", salestax)
                     .addParameter("cleared", cleared)
                     .addParameter("id", id)
                     .executeUpdate();
