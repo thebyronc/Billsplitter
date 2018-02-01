@@ -7,6 +7,7 @@ $(document).ready(function() {
         format: 'json'
       },
       success: function(response) {
+        $("#userOptions").html("");
         response.forEach(function(user) {
           $("#userOptions").append(`<option value="${user.id}">${user.name}</option>`);
         });
