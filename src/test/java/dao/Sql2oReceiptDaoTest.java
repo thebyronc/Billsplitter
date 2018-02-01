@@ -63,7 +63,7 @@ public class Sql2oReceiptDaoTest {
         Receipt receipt = setupNewReceipt();
         receiptDao.add(receipt);
         int receiptId = receipt.getId();
-        receiptDao.update(receiptId,"Chicken Rice", 22.22, true);
+        receiptDao.update(receiptId,"Chicken Rice", true);
         assertEquals("Chicken Rice", receiptDao.findById(receiptId).getReceiptName());
     }
 
@@ -91,11 +91,11 @@ public class Sql2oReceiptDaoTest {
     }
     public Item setupNewItem() {
 
-        return new Item("fries", 10, 2, 1);
+        return new Item("fries", 10, 2, 1,1);
     }
 
     public Item setupNewItem2() {
 
-        return new Item("drink", 5, 1, 1);
+        return new Item("drink", 5, 1, 1,1);
     }
 }

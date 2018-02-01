@@ -115,7 +115,7 @@ public class Sql2oItemDaoTest {
     public void update() throws Exception {
         Item item1 = setupNewItem();
         itemDao.add(item1);
-        itemDao.update(item1.getId(), "Sandwich", 10, 1, 1);
+        itemDao.update(item1.getId(), "Sandwich", 10);
         assertNotEquals(item1.getItemName(), itemDao.findById(item1.getId()).getItemName());
     }
 
@@ -147,14 +147,14 @@ public class Sql2oItemDaoTest {
 
 
     public Item setupNewItem() {
-        return new Item("fries", 10, 2, 1);
+        return new Item("fries", 10, 2, 1,1);
     }
 
     public Item setupNewItem2() {
-        return new Item("drink", 5, 1, 1);
+        return new Item("drink", 5, 1, 1,1);
     }
     public Item setupNewItem3() {
-        return new Item("drink", 5, 1, 2);
+        return new Item("drink", 5, 1, 2,1);
     }
 
     public User setupNewUser() {
