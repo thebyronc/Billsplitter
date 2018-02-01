@@ -1,63 +1,65 @@
 package models;
 
 public class Item {
-    private String itemName;
-    private double cost;
-    private double tip;
-    private int receiptId;
-    private int userId;
-    private int id;
-    private int split;
+  private String itemName;
+  private double cost;
+  private double tip;
+  private int percent;
+  private int receiptId;
+  private int userId;
+  private int id;
 
-    public Item(String itemName, double cost, int split, int receiptId) {
-        this.itemName = itemName;
-        this.cost = cost;
-        this.tip = 0;
-        this.split = split;
-        this.receiptId = receiptId;
+  public Item(String itemName, double cost, int percent, int userId, int receiptId) {
+    this.itemName = itemName;
+    this.cost = cost;
+    this.percent = percent;
+    this.tip = 0;
+    this.userId = userId;
+    this.receiptId = receiptId;
 
-    }
+  }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
-    public String getItemName() {
-        return this.itemName;
-    }
+  public void setItemName(String itemName) {
+    this.itemName = itemName;
+  }
+  public String getItemName() {
+    return this.itemName;
+  }
 
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
-    public double getCost() {
-        return this.cost;
-    }
+  public void setCost(double cost) {
+    this.cost = cost;
+  }
+  public double getCost() {
+    return this.cost;
+  }
 
-    public double getTip(){
-        return 0.15 * cost;
-    }
+  public int getPercent(){
+    return percent;
+  }
 
-    public void setReceiptId(int id) {
-        this.receiptId = id;
-    }
-    public int getReceiptId() {
-        return this.receiptId;
-    }
+  public double getTip(int percent){
+    tip = (cost * percent)/100;
+    return tip;
+  }
 
-    public void setUserId(int id) {
-        this.userId = id;
-    }
-    public int getUserId() {
-        return this.userId;
-    }
+  public void setReceiptId(int id) {
+    this.receiptId = id;
+  }
+  public int getReceiptId() {
+    return this.receiptId;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-    public int getId() {
-        return this.id;
-    }
+  public void setUserId(int id) {
+    this.userId = id;
+  }
+  public int getUserId() {
+    return this.userId;
+  }
 
-    public int getSplit() {
-       return this.split;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
+  public int getId() {
+    return this.id;
+  }
 }

@@ -105,7 +105,7 @@ public class App extends RuntimeException {
             String receiptName = editReceipt.getReceiptName();
             double total = editReceipt.getTotal();
             boolean flag = editReceipt.getCleared();
-            receiptDao.update(idOfReceiptToEdit, receiptName, total, flag);
+            receiptDao.update(idOfReceiptToEdit, receiptName, flag);
             return gson.toJson(editReceipt);
         });
 
@@ -124,7 +124,7 @@ public class App extends RuntimeException {
             String itemName = editItem.getItemName();
             double cost = editItem.getCost();
             int userId = editItem.getUserId();
-            itemDao.update(idOfItemToEdit, itemName, cost, userId);
+            itemDao.update(idOfItemToEdit, itemName, userId);
             return gson.toJson(editItem);
         });
 

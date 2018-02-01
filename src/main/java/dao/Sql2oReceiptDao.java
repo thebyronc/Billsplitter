@@ -46,12 +46,11 @@ public class Sql2oReceiptDao implements ReceiptDao {
     }
 
     @Override
-    public void update(int id, String receiptName, double total, Boolean cleared) {
-        String sql = "UPDATE receipts SET (receiptName, total, cleared) = (:receiptName, :total, :cleared) WHERE id=:id";
+    public void update(int id, String receiptName, Boolean cleared) {
+        String sql = "UPDATE receipts SET (receiptName, cleared) = (:receiptName, :cleared) WHERE id=:id";
         try (Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("receiptName", receiptName)
-                    .addParameter("total", total)
                     .addParameter("cleared", cleared)
                     .addParameter("id", id)
                     .executeUpdate();
