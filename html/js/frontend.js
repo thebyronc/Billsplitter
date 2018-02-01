@@ -67,6 +67,7 @@ $(document).ready(function() {
             }
           });
         }
+    getAllUsers();
 
     $("#clearUsers").click(function(event) {
     event.preventDefault();
@@ -82,7 +83,6 @@ $(document).ready(function() {
     });
     clearAll();
     });
-    getAllUsers();
 });
 
 
