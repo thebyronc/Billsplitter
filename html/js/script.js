@@ -28,7 +28,7 @@ var viewReceiptById = function(id) {
 var clearAll = function() {
     $('#allReceipts').html('');
     $.ajax({
-      url: "http://localhost:4567/receiprs/deleteAll",
+      url: "http://localhost:4567/receipts/deleteAll",
       type: "POST",
       data: {
       format: 'json'

@@ -49,6 +49,15 @@ public class App extends RuntimeException {
             return gson.toJson(allReceipts);
         });
 
+        get("users/:userId/delete", "application.json", (request, response) -> {
+
+            int idOfUserToDelete = Integer.parseInt(request.params("id"));
+            User deleteUser = userDao.findById(idOfUserToDelete);
+            userDao.deleteById(idOfUserToDelete);
+            response.status(201);
+            return gson.toJson(deleteUser);
+        });
+
 
 
         //CREATE
