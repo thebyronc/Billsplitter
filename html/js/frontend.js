@@ -7,9 +7,9 @@ var getAllUsers = function() {
             format: 'json'
         },
         success: function(response) {
-            for(i = 0; i < response.length; i++ ){
+            response.forEach(function(user) {
                 $('#allUsers').prepend(`<li class="list-group-item"><span class="userName">USER:</span> ${response[i].name} <br> <span class="userName">EMAIL:</span> ${response[i].email} <br><span class="userName">ID:</span> ${response[i].id}<span class="deleteId">Delete Id: <a href="#" onclick="currentUser(${response[i].id})"> Delete User</a></span></li>`);
-            }
+            });
         },
         error: function(){
             $('#errors').text("There was an error processing your request. Please try again.")
@@ -92,7 +92,28 @@ $(document).ready(function() {
         });
         getAllUsers();
     });
-    }
+
+    var getUserById = function() {
+        $.ajax({
+          url: "http://localhost:4567/users",
+          type: 'GET',
+          data: {
+            format: 'json'
+          },
+          success: function(response) {
+            response.forEach(function(user) {
+              $(`#user${user.id}`).text(`${user.name}`);
+            });
+          },
+          error: function() {
+            console.log("Get all user Error");
+          }
+        });
+        };
+        })
+
+
+
 
 
 
