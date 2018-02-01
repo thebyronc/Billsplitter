@@ -44,6 +44,8 @@ $(document).ready(function() {
           }
         });
         getAllItems();
+        runningTotal();
+        calculateItemCostByUser();
       }
       $("#addItem")[0].reset();
     });
@@ -195,7 +197,7 @@ $(document).ready(function() {
       }
     });
 }
-calculateItemCostByUser();
+
 
   var getUserById = function() {
     $.ajax({
@@ -217,4 +219,5 @@ calculateItemCostByUser();
 
   getAllItems();
   runningTotal();
+  calculateItemCostByUser();
 });
