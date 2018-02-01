@@ -31,3 +31,9 @@
 #allReceipts li:first-child {
   font-weight: bolder;
 }
+.items div {
+  /*float: left;*/
+}
+.items div:first-child {
+
+}

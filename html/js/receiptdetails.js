@@ -107,19 +107,24 @@ $(document).ready(function() {
       success: function(response) {
         for (i = 0 ; i < response.length; i++ ){
             $('#allItems').prepend(`
-              <li class="list-group-item">
-                <span class="receiptItem">ITEM:</span> ${response[i].itemName}
-                <span class="receiptItem">COST:</span> ${response[i].cost}
-                <span class="receiptItem">| ASSIGNED TO:</span> ${response[i].userId}
-                <form>
-                <select class="userOptions" onchange="updateItem(${response[i].itemid}, value)">
-                  <option value="${response[i].userId}"> ${response[i].userId} </option>
-                </select>
-                </form>
+              <li class="list-group-item items">
+              <div class="row">
+                <div class="col-md-6">
+                  <div><span class="receiptItem">ITEM:</span> ${response[i].itemName}</div>
+                  <div><span class="receiptItem">COST:</span> $${response[i].cost}</div>
+                </div>
+                <div class="col-md-6">
+                  <div><span class="receiptItem">ASSIGNED TO:</span> <span id="user${response[i].userId}"></span></div>
+                  <div><span class="receiptItem">ACTIONS:</span> </div>
+                </div>
+              </div>
+
+
               </li>
               `);
         }
         getAllUsers();
+        getUserById();
       },
       error: function() {
         alert("Get all item Error");
@@ -127,7 +132,7 @@ $(document).ready(function() {
     });
   }
 
-  var getUserById = function(userId) {
+  var getUserById = function() {
     $.ajax({
       url: "http://localhost:4567/users",
       type: 'GET',
@@ -136,7 +141,7 @@ $(document).ready(function() {
       },
       success: function(response) {
         response.forEach(function(user) {
-          $(".userOptions").append(`<option value="${user.id})">${user.name}</option>`);
+          $(`#user${user.id}`).text(`${user.name}`);
         });
       },
       error: function() {
