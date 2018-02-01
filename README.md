@@ -2,8 +2,6 @@
 
 Split bills into itemized receipts.
 
-This is an Epicodus friday project for Java that focuses on API development.
-
 ## Getting Started
 
 To run this application you will need to clone/download the contents of the repository and compile them through IntelliJ IDEA.

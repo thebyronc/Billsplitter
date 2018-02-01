@@ -8,7 +8,7 @@ $(document).ready(function() {
       },
       success: function(response) {
         response.forEach(function(user) {
-          $(".userOptions").append(`<option value="${user.id})">${user.name}</option>`);
+          $("#userOptions").append(`<option value="${user.id}">${user.name}</option>`);
         });
       },
       error: function() {
@@ -23,9 +23,11 @@ $(document).ready(function() {
       var name = $("#itemName").val();
       var cost = parseFloat($("#itemCost").val());
       var split = parseInt($("#itemSplit").val());
+      var userId = parseInt($("#userOptions").val());
       var item = {
         "itemName": name,
         "cost": cost/split,
+        "userId": userId,
         "receiptId": receiptId
       };
       for (i = 0; i < split; i++) {
@@ -59,7 +61,7 @@ $(document).ready(function() {
           for (i = 0 ; i < response.length; i++ ){
              totalCost += response[i].cost;
           }
-          $("#runningTotal").text("$" + totalCost + "TEST");
+          $("#runningTotal").text("$" + totalCost);
         },
         error: function() {
           alert("Get all item Error");
@@ -144,7 +146,5 @@ $(document).ready(function() {
   }
 
   getAllItems();
-
-  getAllUsers();
   runningTotal();
 });
