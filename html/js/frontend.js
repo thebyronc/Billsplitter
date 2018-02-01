@@ -1,21 +1,10 @@
-var getAllUsers = function() {
-    $('#allUsers').html('');
-    $.ajax({
-        url: "http://localhost:4567/users",
-        type: 'GET',
-        data: {
-            format: 'json'
-        },
-        success: function(response) {
-            response.forEach(function(user) {
-                $('#allUsers').prepend(`<li class="list-group-item"><span class="userName">USER:</span> ${response[i].name} <br> <span class="userName">EMAIL:</span> ${response[i].email} <br><span class="userName">ID:</span> ${response[i].id}<span class="deleteId">Delete Id: <a href="#" onclick="currentUser(${response[i].id})"> Delete User</a></span></li>`);
-            });
-        },
-        error: function(){
-            $('#errors').text("There was an error processing your request. Please try again.")
-    }
-  });
-}
+var viewUserById = function(id) {
+  var output = id;
+  localStorage.setItem("userId", id);
+  var OpenWindow = window.open(`userdetail.html#${output}`, "_self", '');
+  OpenWindow.dataFromParent = output; // dataFromParent is a variable in child.html
+  OpenWindow.init();
+};
 
 var clearAll = function() {
     $('#allUsers').html('');
@@ -39,8 +28,6 @@ var deleteUser = function() {
     }
 
 $(document).ready(function() {
-    getAllUsers();
-    deleteUser();
 
     $("#addUser").submit(function(event) {
     event.preventDefault();
@@ -56,8 +43,28 @@ $(document).ready(function() {
         data: JSON.stringify(person),
         dataType: "json",
         });
-        getAllUsers();
+       getAllUsers();
+       $("#addUser")[0].reset();
     });
+
+    var getAllUsers = function() {
+            $('#allUsers').html('');
+            $.ajax({
+                url: "http://localhost:4567/users",
+                type: 'GET',
+                data: {
+                    format: 'json'
+                },
+                success: function(response) {
+                    for (i = 0 ; i < response.length; i++ ){
+                        $('#allUsers').prepend(`<li class="list-group-item"><span class="userName">USER:</span> ${response[i].name} <br> <span class="userName">EMAIL:</span> ${response[i].email} <br><span class="userName">ID:</span> ${response[i].id} More details: <a href="#" onclick="viewUserById(${response[i].id})"> View User by id</a></span></li>`);
+                    }
+                },
+                error: function(){
+                    $('#errors').text("There was an error processing your request. Please try again.")
+            }
+          });
+        }
 
     $("#clearUsers").click(function(event) {
     event.preventDefault();
@@ -73,44 +80,8 @@ $(document).ready(function() {
     });
     clearAll();
     });
-
-    $("#currentUser").click(function(event) {
-    event.preventDefault();
-    var id = $("userId").val();
-    var personId = {
-    "id" : id
-    };
-    $.ajax({
-        type: "GET",
-        url: "http://localhost:4567/users/:userId/delete",
-        data: JSON.stringify(),
-        dataType: "json",
-        success: function(){},
-        failure: function(errMsg){
-            console.log("Error can't delete");
-        }
-        });
-        getAllUsers();
     });
 
-    var getUserById = function() {
-        $.ajax({
-          url: "http://localhost:4567/users",
-          type: 'GET',
-          data: {
-            format: 'json'
-          },
-          success: function(response) {
-            response.forEach(function(user) {
-              $(`#user${user.id}`).text(`${user.name}`);
-            });
-          },
-          error: function() {
-            console.log("Get all user Error");
-          }
-        });
-        };
-        })
 
 
 
