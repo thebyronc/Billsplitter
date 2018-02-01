@@ -4,7 +4,19 @@ body {
   /* #4AD99 #F5A503 #F2385A */
 }
 h3 {
-  color: #757AD1;
+  color: #04AD99;
+}
+h3 {
+  color: #04AD99;
+}
+.form-group {
+  color: #000;
+}
+.list-group-item {
+  background-color: #292929;
+}
+.items {
+  color: #F2F2F2;
 }
 .w3-card-4 {
   margin: 0 15px 15px 0;
@@ -53,4 +65,10 @@ h3 {
 }
 .w3-bar {
   background-color: #000;
+}
+.btn-purple {
+  background-color: #04AD99;
+}
+.btn-purple:hover {
+  background-color: #05D6BD;
 }
