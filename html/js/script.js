@@ -76,10 +76,10 @@ $(document).ready(function() {
             $('#allReceipts').prepend(`
               <div class="w3-card-4">
               <header class="w3-container w3-light-grey">
-                <h3>${response[i].receiptName}</h3>
+                <h4>${response[i].receiptName}</h4>
               </header>
-              <div class="w3-container">
-                <p><span class="receiptItem">ID: </span> ${response[i].id}</p>
+              <div class="w3-container info-bg">
+                <p><span class="receiptItem">ID:${response[i].id} </span></p>
               </div>
               <button class="w3-button w3-block w3-dark-grey" href="#" onclick="viewReceiptById(${response[i].id})">+ View Details</button>
               </div>
