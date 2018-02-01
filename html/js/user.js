@@ -1,3 +1,21 @@
+var getAllUsers = function() {
+    $('#allUsers').html('');
+    $.ajax({
+        url: "http://localhost:4567/users",
+        type: 'GET',
+        data: {
+            format: 'json'
+        },
+        success: function(response) {
+            for(i = 0; i < response.length; i++ ){
+                $('#allUsers').prepend(`<li class="list-group-item"><span class="userName">USER:</span> ${response[i].name} <br> <span class="userName">EMAIL:</span> ${response[i].email} <br><span class="userName">ID:</span> ${response[i].id} </li>`);
+            }
+        },
+        error: function(){
+            $('#errors').text("There was an error processing your request. Please try again.")
+        }
+  });
+}
 
 var deleteById = function() {
     $('#allUsers').html('');
@@ -13,61 +31,28 @@ var deleteById = function() {
 
 
 $(document).ready(function() {
-    var getAllUsers = function() {
-    $.ajax({
-        url: "http://localhost:4567/users",
-        type: 'GET',
-        data: {
-            format: 'json'
-        },
-        success: function(response) {
-            response.forEach(function(user) {
-            $("#userOption").append(`<option value="${user.id}">${user.name}</option>`);
-            });
-        },
-        error: function() {
-        console.log("Get all user Error");
-        }
-    });
-    }
-    var getUserById = function() {
-        $.ajax({
-          url: "http://localhost:4567/users",
-          type: 'GET',
-          data: {
-            format: 'json'
-          },
-          success: function(response) {
-            response.forEach(function(user) {
-              $(`#user${id}`).text(`${user.name}`);
-            });
-          },
-          error: function() {
-            console.log("Get all user Error");
-          }
-        });
-      }
-  //change this to update by id
-    $("#addUser").submit(function(event) {
-    event.preventDefault();
-    var name = $("#name").val();
-    var email = $("#email").val();
-    var person = {
-    "name" : name,
-    "email" : email
-    };
-    $.ajax({
-        type: "POST",
-        url: "http://localhost:4567/users/new",
-        data: JSON.stringify(person),
-        dataType: "json",
-        success: function(){},
-        failure: function(errMsg){
-            console.log("Error adding User: " + errMsg);
-        }
-     });
-     getAllUsers();
-    });
+//    getAllUsers();
+//  //change this to update by id
+//    $("#addUser").submit(function(event) {
+//    event.preventDefault();
+//    var name = $("#name").val();
+//    var email = $("#email").val();
+//    var person = {
+//    "name" : name,
+//    "email" : email
+//    };
+//    $.ajax({
+//        type: "POST",
+//        url: "http://localhost:4567/users/new",
+//        data: JSON.stringify(person),
+//        dataType: "json",
+//        success: function(){},
+//        failure: function(errMsg){
+//            console.log("Error adding User: " + errMsg);
+//        }
+//     });
+//     getAllUsers();
+//    });
 
 //    var getUserById = function() {
 //    $.ajax({
@@ -111,4 +96,3 @@ $(document).ready(function() {
 
 
 });
-
