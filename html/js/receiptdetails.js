@@ -114,7 +114,7 @@ $(document).ready(function() {
                   <div><span class="receiptItem">COST:</span> $${response[i].cost}</div>
                 </div>
                 <div class="col-md-6">
-                  <div><span class="receiptItem">ASSIGNED TO:</span> <span id="user${response[i].userId}"></span></div>
+                  <div><span class="receiptItem">ASSIGNED TO:</span> <span class="user${response[i].userId}"></span></div>
                   <div><span class="receiptItem">ACTIONS:</span> </div>
                 </div>
               </div>
@@ -131,6 +131,71 @@ $(document).ready(function() {
       }
     });
   }
+  var getUserIds = function() {
+    var receiptId = localStorage.getItem("receiptId");
+    var exportUsers = [];
+    $.ajax({
+      url: "http://localhost:4567/users",
+      type: 'GET',
+      data: {
+        format: 'json'
+      },
+      success: function(response) {
+        var allUsers = [];
+
+        for (i = 0 ; i < response.length; i++ ){
+            allUsers.push(`${response[i].id}`);
+            console.log(`${response[i].id} ${response[i].name}`);
+        }
+        console.log("allUsers Array:" + allUsers);
+        localStorage.setItem("allUsers", allUsers);
+      },
+      error: function() {
+        alert("Get all items by user Error");
+      }
+    });
+  }
+
+  var calculateItemCostByUser = function() {
+    var receiptId = localStorage.getItem("receiptId");
+    getUserIds();
+    var getUserId = localStorage.getItem("allUsers");
+
+    console.log("before for loop: "+getUserId);
+    $.ajax({
+      url: "http://localhost:4567/receipts/" + receiptId + "/items",
+      type: 'GET',
+      data: {
+        format: 'json'
+      },
+      success: function(response) {
+
+        var costPerUser = [];
+        for(i = 0; i < response.length; i++){
+          for(userIndex = 0; userIndex < getUserId.length; userIndex++){
+            costPerUser[i] = 0;
+            if(`${response[i].userId}` ===  getUserId[userIndex]) {
+              var itemCost = `${response[i].cost}`;
+              costPerUser[userIndex] += parseInt(itemCost);
+              console.log("Each User Array Total: " + costPerUser[userIndex] + " Int Added: "+ `${response[i].cost}`);
+            }
+          }
+        }
+        $(".userTotals").html("");
+        for(i = 0; i<getUserId.length; i++){
+
+          if(costPerUser[i] > 0) {
+            $(".userTotals").append(
+              '<li class="list-group-item"><span class="badge">$' +costPerUser[i]+ '</span>' +
+              '<span class="user'+getUserId[i]+'"></span></li>');
+          }
+        }
+      },
+      error: function () {
+      }
+    });
+}
+calculateItemCostByUser();
 
   var getUserById = function() {
     $.ajax({
@@ -141,7 +206,7 @@ $(document).ready(function() {
       },
       success: function(response) {
         response.forEach(function(user) {
-          $(`#user${user.id}`).text(`${user.name}`);
+          $(`.user${user.id}`).text(`${user.name}`);
         });
       },
       error: function() {
